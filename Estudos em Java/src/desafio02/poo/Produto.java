@@ -6,6 +6,7 @@ public class Produto {
     private double preco;
     private int quantidade;
 
+
     public double getPreco() {
         return preco;
     }
@@ -31,6 +32,6 @@ public class Produto {
     }
 
     public void exibirDetalhes(){
-        System.out.println("O produto: " + nome + " tem " + quantidade + " em estoque, com o valor por unidade de: " + preco);
+        System.out.println("O produto: " +getNome() + " tem " + getQuantidade() + " unidades em estoque, com o valor por unidade de: " + getPreco());
     }
 }
