@@ -1,3 +1,5 @@
+package desafio01;
+
 public class ContaBancaria {
     String titular;
     int numeroConta;
