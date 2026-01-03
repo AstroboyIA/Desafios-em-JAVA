@@ -41,11 +41,14 @@ public class Main {
                     double nota = entrada.nextDouble();
                     entrada.nextLine();
 
+                    /*
                     Pessoa aluno = new Aluno(nomeAluno, idAluno, nota);
+                    Parte do codigo desnecessaria: "listaEscolar.add(new Aluno(nomeAluno, idAluno, nota));" Já faz o trabalho de setar as informações.
                     aluno.setNome(nomeAluno);
                     aluno.setId(idAluno);
                     aluno.setNota(nota);
-                    listaEscolar.add(aluno);
+                    */
+                    listaEscolar.add(new Aluno(nomeAluno, idAluno, nota));
                     System.out.println("Cadastro criado com sucesso!");
                     break;
 
@@ -59,16 +62,18 @@ public class Main {
                     System.out.println("Digite a disciplina do Professor: ");
                     String disciplina =  entrada.nextLine();
 
+                    /*
                     Pessoa professor = new Professor(nomeProfessor, idProfessor, disciplina);
                     professor.setNome(nomeProfessor);
                     professor.setId(idProfessor);
                     professor.setDisciplina(disciplina);
-                    listaEscolar.add(professor);
+                     */
+                    listaEscolar.add(new Professor(nomeProfessor, idProfessor, disciplina));
                     System.out.println("Cadastro criado com sucesso!");
                     break;
 
                 case 3:
-                    if (!listaEscolar.isEmpty()){
+                    if (listaEscolar.isEmpty()){
                         System.out.println("O cadastro está vazio!");
                     }else{
                         System.out.println("\n -Cadastro Atual -");

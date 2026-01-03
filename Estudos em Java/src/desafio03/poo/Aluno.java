@@ -14,9 +14,10 @@ public class Aluno extends Pessoa {
         return nota;
     }
 
+
+    @Override
     public void exibirInfo(){
-        System.out.println("Nome: " + getNome());
-        System.out.println("Id: " + getId());
+        super.exibirInfo();
         System.out.println("Nota: " + getNota());
         if (nota >= 6.0){
             System.out.println("Aluno Aprovado!");

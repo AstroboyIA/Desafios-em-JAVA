@@ -14,9 +14,9 @@ public class Professor extends Pessoa {
         return disciplina;
     }
 
+    @Override
     public void exibirInfo(){
-        System.out.println("Nome: " + getNome());
-        System.out.println("Id: " + getId());
+        super.exibirInfo();
         System.out.println("Disciplina: " + getDisciplina());
     }
 }
