@@ -10,10 +10,4 @@ public class Cliente {
     public Cliente(String nomeCliente) {
         this.nomeCliente = nomeCliente;
     }
-
-    /*
-     * public void valorFinal() {
-     * //soma de todos os valores do pedido
-     * }
-     */
 }

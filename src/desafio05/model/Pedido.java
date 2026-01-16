@@ -10,4 +10,20 @@ public class Pedido {
     public void addProduto(Produto produto) {
         produtos.add(produto);
     }
+
+    public Double valorFinalPedido() {
+        ///se a lista estiver vazia retorna:
+        /// PARA VERIFICAR LISTA VAZIA USAR .isEmpty()
+        if (produtos.isEmpty()) {
+            System.out.println("Nenhum produto adicionado ao pedido.");
+            return 0.0;
+        }
+
+        /// cria o metodo que vai somar os valores dentro da lista de produtos e retorna
+        Double total = 0.0;
+        for (Produto produto : produtos) {
+            total += produto.getInfoValor();
+        }
+        return total;
+    }
 }
