@@ -11,8 +11,8 @@ public class Cliente {
         this.nomeCliente = nomeCliente;
     }
 
-    public String getNomecliente() {
+    public String getNomeCliente() {
         return nomeCliente;
     }
-    
+
 }

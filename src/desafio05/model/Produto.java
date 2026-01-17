@@ -1,15 +1,17 @@
 package desafio05.model;
 
 public class Produto {
-    String infoProduto;
-    Double infoValor; // preco nao pode ser negativo
+    String produto;
+    Double preco; // preco nao pode ser negativo
 
-  public Double getInfoValor() {
-        return infoValor;
+  public Double getPreco() {
+        return preco;
     }
 
-  public Produto (String infoProduto, Double infoValor) {
-        this.infoProduto = infoProduto;
-        this.infoValor = infoValor;
+  public Produto (String produto, Double preco) {
+        this.produto = produto;
+        this.preco = preco;
     }
 }
+
+// FALTA CRIAR CONDIÇÃO DE QUE PREÇO NÃO PODE SER NEGATIVO
