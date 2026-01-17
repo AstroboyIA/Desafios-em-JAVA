@@ -5,14 +5,19 @@ import java.util.List;
 
 public class Pedido {
 
-    List<Produto> produtos = new ArrayList<>();
+    List<Pedido> produtos = new ArrayList<>();
 
-    public void addProduto(Produto produto) {
+    // adiciona produto na lista
+    public void addProduto(Pedido produto) {
         produtos.add(produto);
     }
 
-    public Double valorFinalPedido() {
-        ///se a lista estiver vazia retorna:
+    // remove produto da lista
+    public void removerProduto(Pedido produto){
+        produtos.remove(produto);
+    }
+
+    public Double ValorFinalPedido() {
         /// PARA VERIFICAR LISTA VAZIA USAR .isEmpty()
         if (produtos.isEmpty()) {
             System.out.println("Nenhum produto adicionado ao pedido.");
@@ -21,7 +26,7 @@ public class Pedido {
 
         /// cria o metodo que vai somar os valores dentro da lista de produtos e retorna
         Double total = 0.0;
-        for (Produto produto : produtos) {
+        for (Pedido produto : produtos) {
             total += produto.getInfoValor();
         }
         return total;
