@@ -13,5 +13,3 @@ public class Produto {
         this.preco = preco;
     }
 }
-
-// FALTA CRIAR CONDIÇÃO DE QUE PREÇO NÃO PODE SER NEGATIVO

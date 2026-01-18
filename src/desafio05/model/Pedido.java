@@ -16,8 +16,6 @@ public class Pedido {
     public void removerProduto(Produto produto) {
         produtos.remove(produto);
     }
-
-    // getter da lista produtos, eu não sabia que precisava fazer isso :(
     public List<Produto> getProdutos() {
         return produtos;
     }
