@@ -2,7 +2,7 @@ package desafio05.model;
 
 // precisa receber valor final e aplicar 10% de desconto
 public class ClienteVip extends Cliente {
-    final Double percentualDesconto = 10.0;
+    private static final Double percentualDesconto = 10.0;
 
     public ClienteVip(String nomeCliente) {
         super(nomeCliente);
@@ -13,9 +13,5 @@ public class ClienteVip extends Cliente {
         Double total = pedido.contaValorTotal();
         Double desconto = total * (percentualDesconto / 100);
         return total - desconto;
-    }
-
-    public Double getPercentualDesconto() {
-        return percentualDesconto;
     }
 }
