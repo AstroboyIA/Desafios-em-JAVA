@@ -2,6 +2,7 @@ package desafio06.service;
 
 import java.util.Scanner;
 
+import desafio06.model.Carrinho;
 import desafio06.model.Cliente;
 import desafio06.model.Produto;
 
@@ -46,5 +47,12 @@ public class CompraService {
         Produto produto = new Produto(nomeProduto, precoProduto);
 
         return produto;
+    }
+
+    public void exibirResumo(Cliente cliente, Carrinho carrinho){
+        System.out.println("Finalizando compras...");
+        System.out.println("Aqui está o resumo da sua compra:");
+        System.err.println("A compra do Cliente " + cliente.getNome());
+        System.out.println("Ficou no valor de: " );
     }
 }
