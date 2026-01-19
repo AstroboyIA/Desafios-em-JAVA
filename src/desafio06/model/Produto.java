@@ -1,4 +1,4 @@
-package desafio06.Model;
+package desafio06.model;
 
 public class Produto {
     public String nome;
@@ -15,6 +15,14 @@ public class Produto {
     public Produto(String nome, Double preco) {
         this.nome = nome;
         this.preco = preco;
+
+        do {
+            if (preco < 0) {
+                System.out.println("O preço não pode ser negativo, informe um valor válido!");
+            }
+        } while (preco < 0);
     }
 
 }
+
+// Finalizado

@@ -1,4 +1,4 @@
-package desafio06.Model;
+package desafio06.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,5 +18,7 @@ public class Carrinho {
         }
         return total;
     }
-
 }
+
+
+// Finalizado
