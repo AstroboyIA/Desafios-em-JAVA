@@ -7,6 +7,10 @@ public class Carrinho {
     
     List<Produto> produtos = new ArrayList<>();
 
+    public List<Produto> getProdutos(){
+        return produtos;
+    }
+
     public void adicionarProduto(Produto produto){
         produtos.add(produto);
     }

@@ -50,9 +50,20 @@ public class CompraService {
     }
 
     public void exibirResumo(Cliente cliente, Carrinho carrinho){
+
+        double total = 0;
+        for (Produto p : carrinho.getProdutos()){
+            total =+ p.getPreco();
+        }
+
         System.out.println("Finalizando compras...");
         System.out.println("Aqui está o resumo da sua compra:");
         System.err.println("A compra do Cliente " + cliente.getNome());
-        System.out.println("Ficou no valor de: " );
+        System.out.println("Ficou no valor de: " + total );
+        if (total > 100) {
+            System.out.println("Compra de valor alto!");
+        }else{
+            System.out.println("Compra comum!");
+        }
     }
 }
