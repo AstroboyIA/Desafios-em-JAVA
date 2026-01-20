@@ -2,8 +2,8 @@ package desafio06;
 
 import java.util.Scanner;
 
+import desafio06.model.Carrinho;
 import desafio06.model.Cliente;
-import desafio06.model.Produto;
 import desafio06.service.CompraService;
 
 public class Main {
@@ -16,10 +16,14 @@ public class Main {
 
         CompraService service = new CompraService();
         
+        Carrinho carrinho = new Carrinho();
+        
         Cliente cliente = service.cadastrarCliente(sc);
 
-        Produto produto = service.cadastraProduto(sc);
+        service.cadastraProduto(sc, carrinho);
 
-        
+        service.exibirResumo(cliente, carrinho);
+
+        sc.close();
     }
 }

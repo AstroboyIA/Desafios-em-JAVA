@@ -9,17 +9,18 @@ import desafio06.model.Produto;
 public class CompraService {
 
     public Cliente cadastrarCliente(Scanner sc) {
-        Cliente cliente = null;
         String nomeCliente;
 
         System.out.println("Para continuar cadaste um cliente!");
         System.out.println("Informe o nome do cliente:");
         nomeCliente = sc.nextLine();
 
+        Cliente cliente = new Cliente(nomeCliente);
+
         return cliente;
     }
 
-    public Produto cadastraProduto(Scanner sc) {
+    public void cadastraProduto(Scanner sc, Carrinho carrinho) {
 
         String nomeProduto;
         Double precoProduto;
@@ -37,29 +38,28 @@ public class CompraService {
             sc.nextLine();
             System.out.println("");
 
+            Produto produto = new Produto(nomeProduto, precoProduto);
+            carrinho.getProdutos().add(produto);
+
             System.out.println("Deseja cadastrar outro produto?");
             System.out.println("1 - Sim");
             System.out.println("2 - Não");
             opcao = sc.nextInt();
             sc.nextLine();
         } while (opcao == 1);
-
-        Produto produto = new Produto(nomeProduto, precoProduto);
-
-        return produto;
     }
 
     public void exibirResumo(Cliente cliente, Carrinho carrinho){
 
-        double total = 0;
+        double total = 0.0;
         for (Produto p : carrinho.getProdutos()){
-            total =+ p.getPreco();
+            total += p.getPreco();
         }
 
         System.out.println("Finalizando compras...");
         System.out.println("Aqui está o resumo da sua compra:");
-        System.err.println("A compra do Cliente " + cliente.getNome());
-        System.out.println("Ficou no valor de: " + total );
+        System.err.println("A compra do Cliente: " + cliente.getNome());
+        System.out.println("A compra ficou no valor total de: " + total );
         if (total > 100) {
             System.out.println("Compra de valor alto!");
         }else{
