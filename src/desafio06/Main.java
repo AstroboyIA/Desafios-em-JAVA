@@ -24,6 +24,8 @@ public class Main {
 
         service.exibirResumo(cliente, carrinho);
 
+        carrinho.mensagemFinal();
+
         sc.close();
     }
 }

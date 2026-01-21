@@ -11,7 +11,7 @@ public class Cliente {
         this.nome = nome;
     }
     
-    public void finalizarCcompra (Carrinho carrinho){
+    public void finalizarCompra (Carrinho carrinho){
     }
 }
 
