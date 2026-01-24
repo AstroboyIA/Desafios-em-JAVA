@@ -20,7 +20,7 @@ public class Main {
 
         service.cadastrarLivro(sc);
 
-        service.emprestimo.tamanhoFinal();
+        service.finalizarEmprestimo();
 
         sc.close();
 

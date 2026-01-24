@@ -19,6 +19,8 @@ public class EmprestimoService {
         System.out.println("Para continuar com o empréstimo, por favor cadastre um usuário:");
         System.out.println("Por favor insira o nome do usuário:");
         nomeLeitor = sc.nextLine();
+        Leitor leitor = new Leitor(nomeLeitor);
+        System.out.println("Usuário " + leitor.getNome() + " cadastrado com sucesso!");
     }
 
     public void cadastrarLivro(Scanner sc) {
@@ -38,7 +40,6 @@ public class EmprestimoService {
             Livro livro = new Livro(nomeLivro, autorLivro);
             emprestimo.adicionarLivro(livro);
 
-            System.out.println("DEBUG: Total de livros agora: " + emprestimo.getLivros().size());
             System.out.println("Deseja cadastrar outro livro?");
             System.out.println("1 - Sim");
             System.out.println("2 - Não");
@@ -46,6 +47,17 @@ public class EmprestimoService {
             sc.nextLine();
 
         } while (opcao == 1);
-        System.out.println("DEBUG FINAL: Total de livros cadastrados: " + emprestimo.getLivros().size());
+    }
+
+    public void finalizarEmprestimo() {
+
+        int quantidade = emprestimo.calcularQuantidade();
+        
+        if (quantidade > 3) {
+            System.out.println("Empréstimo grande!");
+        } else {
+            System.out.println("Empréstimo comum!");
+        }
+
     }
 }
