@@ -11,7 +11,7 @@ public class Main {
 
         MatriculaService matriculaService = new MatriculaService();
 
-        matriculaService.wellcome();
+        matriculaService.welcome();
 
         matriculaService.cadastrarAluno(sc);
 

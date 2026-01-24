@@ -14,7 +14,7 @@ public class MatriculaService {
         this.matricula = new Matricula();
     }
 
-    public void wellcome() {
+    public void welcome() {
         System.out.println("Bem vindo ao sistema de matrícula!");
     }
 
@@ -57,7 +57,6 @@ public class MatriculaService {
         boolean classificarMatricula = matricula.classificarMatricula();
 
         System.out.println("Cadastro finalizado!");
-        System.out.println("Carga total: " + matricula.totalCargaHoraria());
 
         if (classificarMatricula) {
             System.out.println("Matrícula completa!");
