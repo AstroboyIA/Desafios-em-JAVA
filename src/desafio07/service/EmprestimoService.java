@@ -51,6 +51,10 @@ public class EmprestimoService {
 
     public void finalizarEmprestimo() {
 
+        System.out.println("Finalizando empréstimo...");
+
+        System.out.println("Empréstimo finalizado com sucesso! Seus livros estão prontos para serem retirados.");
+
         int quantidade = emprestimo.calcularQuantidade();
         
         if (quantidade > 3) {
