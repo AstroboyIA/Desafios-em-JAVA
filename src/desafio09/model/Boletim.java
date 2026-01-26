@@ -7,6 +7,10 @@ public class Boletim {
     
     private List<Nota> notas = new ArrayList<>();
 
+    public List<Nota> getNotas() {
+        return notas;
+    }
+
     public void adicionarNota(Nota nota) {
         this.notas.add(nota);
     }
