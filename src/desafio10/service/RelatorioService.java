@@ -2,20 +2,19 @@ package desafio10.service;
 
 import java.util.Scanner;
 
+import desafio10.model.Avaliacao;
 import desafio10.model.Funcionario;
 import desafio10.model.Relatorio;
 
 public class RelatorioService {
 
     Funcionario funcionario;
-    Relatorio relatorio;
 
-
-    public void welcome(){
+    public void welcome() {
         System.out.println("Bem-vindo ao sistema de relatórios de avaliações!");
     }
 
-    public Funcionario cadastrarFuncionario(Scanner sc, Funcionario funcionario){
+    public Funcionario cadastrarFuncionario(Scanner sc, Funcionario funcionario) {
         String nomeFuncionario;
         System.out.println("Para continuar, cadastre um funcionário!");
 
@@ -25,11 +24,27 @@ public class RelatorioService {
         return funcionario;
     }
 
-    public double cadastrarNotas(Scanner sc, Relatorio relatorio){
-        double nota;
-        System.out.println("Insira a nota do funcionário:");
-        nota = sc.nextDouble();
-        relatorio = new Relatorio();
-        return nota;
+    public void cadastrarNotas(Scanner sc, Relatorio relatorio) {
+        double nota = 0.0;
+        int opcao;
+        System.out.println("Para continuar, insira uma nota de avaliação para o funcionário:");
+        do{
+            System.out.println("Insira a nota:");
+            nota = sc.nextDouble();
+            sc.nextLine();
+            Avaliacao avaliacao = new Avaliacao(nota);
+            relatorio.adicionarAvaliacao(avaliacao);
+            System.out.println("Deseja iserir outra nota?");
+            System.out.println("1 - Sim");
+            System.out.println("2 - Não");
+            opcao = sc.nextInt();
+            sc.nextLine();
+        
+        } while (opcao == 1);
+    }
+
+    public void exibirSatisfacao(){
+        System.out.println("----- Relatório de Satisfação -----");
+
     }
 }
