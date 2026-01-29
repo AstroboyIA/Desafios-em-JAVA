@@ -43,8 +43,8 @@ public class RelatorioService {
         } while (opcao == 1);
     }
 
-    public void exibirSatisfacao(){
+    public void exibirSatisfacao(Relatorio relatorio){
         System.out.println("----- Relatório de Satisfação -----");
-
+        System.out.println("O funcionário: " + funcionario.getNome() + " ficou com a média de notas avaliativas "+ relatorio.calcularMedia() + " que é considerada " + relatorio.isDesemprenhoSatisfatorio() + ".");
     }
 }
