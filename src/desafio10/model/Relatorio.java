@@ -4,30 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Relatorio {
-    
 
     private List<Avaliacao> avaliacoes = new ArrayList<>();
 
-    public void adicionarAvaliacao(Avaliacao avaliacao){
+    public void adicionarAvaliacao(Avaliacao avaliacao) {
         avaliacoes.add(avaliacao);
     }
 
-    public double calcularMedia(){
-        double media = 0.0;
-        int tamanho = avaliacoes.size();
-        for(Avaliacao avaliacao : avaliacoes){
-            media += avaliacao.getNota();
+    public double calcularMedia() {
+    
+        if (avaliacoes.isEmpty()) {
+            return 0.0;
         }
-        media = media / tamanho;
 
-        return media;
-    }
-
-    public boolean isDesemprenhoSatisfatorio(){
-        if (calcularMedia() >= 7.0) {
-            return true;
-        }else{
-            return false;
+        double soma = 0.0;
+        for (Avaliacao avaliacao : avaliacoes) {
+                soma += avaliacao.getNota();
+            }
+            return soma / avaliacoes.size();
         }
+
+    public boolean isDesempenhoSatisfatorio() {
+        return calcularMedia() >= 7.0;
     }
 }

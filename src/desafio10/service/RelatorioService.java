@@ -14,14 +14,13 @@ public class RelatorioService {
         System.out.println("Bem-vindo ao sistema de relatórios de avaliações!");
     }
 
-    public Funcionario cadastrarFuncionario(Scanner sc, Funcionario funcionario) {
+    public void cadastrarFuncionario(Scanner sc, Funcionario funcionario) {
         String nomeFuncionario;
         System.out.println("Para continuar, cadastre um funcionário!");
 
         System.out.println("Insira o nome do funcionário:");
         nomeFuncionario = sc.nextLine();
-        funcionario = new Funcionario(nomeFuncionario);
-        return funcionario;
+        this.funcionario = new Funcionario(nomeFuncionario);
     }
 
     public void cadastrarNotas(Scanner sc, Relatorio relatorio) {
@@ -44,7 +43,16 @@ public class RelatorioService {
     }
 
     public void exibirSatisfacao(Relatorio relatorio){
+        
+        boolean desempenho = relatorio.isDesempenhoSatisfatorio();
+
         System.out.println("----- Relatório de Satisfação -----");
-        System.out.println("O funcionário: " + funcionario.getNome() + " ficou com a média de notas avaliativas "+ relatorio.calcularMedia() + " que é considerada " + relatorio.isDesemprenhoSatisfatorio() + ".");
+        System.out.println("O funcionário: " + funcionario.getNome() + " ficou com a média de notas avaliativas "+ relatorio.calcularMedia() + ".");
+
+        if (desempenho) {
+            System.out.println("O seu desempenho foi considerado satisfatório.");
+        } else {
+            System.out.println("O seu desempenho foi considerado insatisfatório.");
+        }
     }
 }
