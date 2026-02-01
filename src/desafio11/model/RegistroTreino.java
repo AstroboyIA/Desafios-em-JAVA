@@ -23,7 +23,7 @@ public class RegistroTreino {
         }
         return fulltime;
     }
-    public boolean isTempoTotal(){
+    public boolean isTreinoConsistente(){
         return fullTimeTreino() >= 300;
     }
 }
