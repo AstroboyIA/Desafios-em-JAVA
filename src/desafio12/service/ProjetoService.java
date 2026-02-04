@@ -3,7 +3,7 @@ package desafio12.service;
 import java.util.Scanner;
 
 import desafio12.model.Projeto;
-import desafio12.model.Projeto.TamanhoProjeto;
+import desafio12.model.TamanhoProjeto;
 import desafio12.model.Tarefa;
 
 public class ProjetoService {
@@ -29,7 +29,7 @@ public class ProjetoService {
         int horasEstimadas;
         byte opcao;
 
-        System.out.println("Qual tarefa seu projeto vai receber?");
+        System.out.println("Vamos adicionar tarefas ao projeto.");
 
         do {
             System.out.println("Insira uma tarefa:");
@@ -40,9 +40,9 @@ public class ProjetoService {
 
             Tarefa tarefa = new Tarefa(descricaoTarefa, horasEstimadas);
             projeto.adicionarTarefa(tarefa);
-
             System.out.println("Tarefa adicionada com sucesso!");
 
+            System.out.println("Deseja adicionar outra tarefa?");
             System.out.println("1 - Sim");
             System.out.println("2 - Não");
             opcao = sc.nextByte();
@@ -52,12 +52,12 @@ public class ProjetoService {
     }
 
     public void resumoProjeto(Projeto projeto) {
-        
-        TamanhoProjeto tamanho = projeto.calcularTamanho();
 
         System.out.println("---Resumo do projeto---");
         System.out.println("Projeto :" + projeto.getNome());
         System.out.println("Total de horas : " + projeto.calcularTotalHorasEstimadas());
-        System.out.println("Classificação :" + tamanho);
+
+        TamanhoProjeto tamanho = projeto.calcularTamanho();
+        System.out.println("Classificação :" + tamanho.getDescricao());
     }
 }

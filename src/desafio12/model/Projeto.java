@@ -2,8 +2,10 @@ package desafio12.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import desafio12.model.TamanhoProjeto;
 
 public class Projeto {
+
     private String nome;
 
     public String getNome() {
@@ -26,12 +28,6 @@ public class Projeto {
             totalHoras += tarefa.getHorasEstimadas();
         }
         return totalHoras;
-    }
-
-    public enum TamanhoProjeto {
-        PEQUENO,
-        MEDIO,
-        GRANDE
     }
 
     public TamanhoProjeto calcularTamanho() {
