@@ -5,13 +5,13 @@ public enum StatusProjeto {
     EM_ANDAMENTO("Em andamento"),
     CONCLUIDO("Concluido");
 
-    private StatusProjeto(String status) {
-        this.status = status;
+    private String descricao;
+
+    public String getDescricao() {
+        return descricao;
     }
 
-    private String status;
-
-    public String getStatus() {
-        return status;
+    private StatusProjeto(String descricao) {
+        this.descricao = descricao;
     }
 }
