@@ -1,4 +1,4 @@
-package desafio13.model;
+package desafio13.backend.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,5 +35,12 @@ public class Projeto {
 
         return StatusProjeto.CONCLUIDO;
 
+    }
+
+    public int calcularProjeto(int horasEstimadas, int horasConcluidas){
+        if (horasEstimadas == 0) return 0;
+        
+        int percentual = (horasConcluidas * 100) / horasEstimadas;
+        return percentual;
     }
 }

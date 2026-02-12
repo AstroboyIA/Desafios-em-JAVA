@@ -1,8 +1,8 @@
-package desafio13.model;
+package desafio13.backend.model;
 
 public class Tarefa {
     
-    String descricao;
+    private String descricao;
 
     public Tarefa(String descricao) {
         this.descricao = descricao;
@@ -12,8 +12,8 @@ public class Tarefa {
         return descricao;
     }
 
-    int horasEstimadas;
-    int horasConcluidas;
+    private int horasEstimadas;
+    private int horasConcluidas;
 
     public boolean isConcluida() {
         return horasConcluidas >= horasEstimadas;

@@ -7,7 +7,7 @@ import desafio10.model.Relatorio;
 import desafio10.service.RelatorioService;
 
 public class Main {
-    public static void Main(String[] args) {
+    public static void main(String[] args) {
 
         RelatorioService relatorioService = new RelatorioService();
 
