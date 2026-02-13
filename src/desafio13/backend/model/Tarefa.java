@@ -18,7 +18,7 @@ public class Tarefa {
         return horasEstimadas;
     }
 
-    public Tarefa(String descricao, int horasEstimadas, int horasConcluidas) {
+    public void cadastrarTarefa(String descricao, int horasEstimadas, int horasConcluidas) {
         this.descricao = descricao;
         this.horasEstimadas = horasEstimadas;
         this.horasConcluidas = horasConcluidas;
