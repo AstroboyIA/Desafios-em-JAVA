@@ -37,10 +37,35 @@ public class Projeto {
 
     }
 
-    public int calcularProjeto(int horasEstimadas, int horasConcluidas){
-        if (horasEstimadas == 0) return 0;
-        
-        int percentual = (horasConcluidas * 100) / horasEstimadas;
-        return percentual;
+    public int percentualProjeto() {
+
+        int totalHorasEstimadas = 0;
+        int totalHorasConcluidas = 0;
+
+        for (Tarefa tarefa : tarefas) {
+            totalHorasEstimadas += tarefa.getHorasEstimadas();
+            totalHorasConcluidas += tarefa.getHorasConcluidas();
+        }
+
+        if (totalHorasEstimadas == 0) return 0;
+            
+        return (totalHorasConcluidas * 100) / totalHorasEstimadas;
+    }
+
+    public TamanhoProjeto calcularTamanho() {
+
+        int tamanho = 0;
+
+        for (Tarefa tarefa : tarefas) {
+            tamanho += tarefa.getHorasEstimadas();
+        }
+
+        if (tamanho <= 20) {
+            return TamanhoProjeto.PEQUENO;
+        } else if (tamanho <= 50) {
+            return TamanhoProjeto.MEDIO;
+        } else {
+            return TamanhoProjeto.GRANDE;
+        }
     }
 }
