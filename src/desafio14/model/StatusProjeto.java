@@ -1,4 +1,4 @@
-package desafio13.backend.model;
+package desafio14.model;
 
 public enum StatusProjeto {
     NAO_INICIADO("Não iniciado"),

@@ -16,7 +16,7 @@ public class Main {
         
         service.BoasVindas();
 
-        service.cadastrarProjeto(sc);
+        projeto = service.cadastrarProjeto(sc, projeto);
 
         service.cadastarTarefas(sc, projeto);
 
@@ -25,5 +25,4 @@ public class Main {
         sc.close();
 
     }
-
 }

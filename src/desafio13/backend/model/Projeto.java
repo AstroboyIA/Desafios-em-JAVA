@@ -23,7 +23,7 @@ public class Projeto {
     public StatusProjeto calcularStatus() {
 
         if (tarefas.isEmpty()) {
-            return StatusProjeto.NAO_INICIARO;
+            return StatusProjeto.NAO_INICIADO;
         }
 
         for (Tarefa tarefa : tarefas) {
