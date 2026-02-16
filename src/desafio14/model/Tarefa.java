@@ -23,21 +23,24 @@ public class Tarefa {
         this.descricao = descricao;
         this.horasEstimadas = horasEstimadas;
         this.horasConcluidas = horasConcluidas;
+
+        if (horasEstimadas < 0) {
+            System.out.println("A estimativa não pode ser negativa");
+            throw new IllegalArgumentException();
+        }
+
+        if (horasConcluidas < 0) {
+            System.out.println("A conclusão não pode ser negativa");
+            throw new IllegalArgumentException();
+        }
+
+        if (horasConcluidas > horasEstimadas) {
+            System.out.println("A conclusão não pode ser maior que a estimativa");
+            throw new IllegalArgumentException();
+        }
     }
 
     public boolean isConcluida() {
         return horasConcluidas >= horasEstimadas;
     }
 }
-
-/*
- * 📍 Nova regra de validação:
- * 
- * a tarefa não pode ter horas negativas
- * 
- * horasConcluidas não pode ser maior que horasEstimadas
- * 
- * 
- * Se os dados forem inválidos, o model deve impedir o cadastro (ex.:
- * IllegalArgumentException).
- */

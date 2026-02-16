@@ -17,15 +17,15 @@ public class Projeto {
         return prazoHoras;
     }
 
-    List<Tarefa> tarefas = new ArrayList<>();
-
-    public Projeto(List<Tarefa> tarefas) {
-        this.tarefas = tarefas;
+    public Projeto(int prazoHoras, String nome) {
+        this.prazoHoras = prazoHoras;
+        this.nome = nome;
     }
 
-    public Projeto(String nome, int prazoHoras) {
-        this.nome = nome;
-        this.prazoHoras = prazoHoras;
+    private List<Tarefa> tarefas = new ArrayList<>();
+
+    public void cadastrarTarefa(Tarefa tarefa) {
+        tarefas.add(tarefa);
     }
 
     public StatusProjeto calcularStatus() {
@@ -67,7 +67,7 @@ public class Projeto {
         for (Tarefa tarefa : tarefas) {
             totalHorasEstimadas += tarefa.getHorasEstimadas();
         }
-        
+
         if (totalHorasEstimadas == 0)
             return 0;
 
@@ -77,13 +77,32 @@ public class Projeto {
 
     public SituacaoPrazo calcularSituacaoPrazo() {
         int previsaoHorasFinais = calcularPrevisaoHorasFinais();
-        
+
         if (previsaoHorasFinais < prazoHoras) {
             return SituacaoPrazo.ADIANTADO;
-        }else if (previsaoHorasFinais == prazoHoras) {
+        } else if (previsaoHorasFinais == prazoHoras) {
             return SituacaoPrazo.NO_PRAZO;
-        }else {
+        } else {
             return SituacaoPrazo.ATRASADO;
         }
+    }
+
+    public int calcularPercentualConclusaoReal() {
+        int horasConcluidas = 0;
+        int conclusaoReal;
+
+        for (Tarefa tarefa : tarefas) {
+            horasConcluidas += tarefa.getHorasConcluidas();
+        }
+
+        if (prazoHoras == 0)
+            return 0;
+
+        conclusaoReal = (horasConcluidas * 100) / prazoHoras;
+
+        if (conclusaoReal > 100) {
+            return 100;
+        }
+        return conclusaoReal;
     }
 }

@@ -178,14 +178,3 @@ Conclusão real (prazo): 54%
 
 > “Projeto saudável não é só o que conclui tarefa,
 é o que conclui tarefa dentro de plano.”
-
-
----
-
-Quando terminar:
-
-envie primeiro as classes de model (incluindo o novo enum)
-
-depois envie o service
-
-por fim o Main.
