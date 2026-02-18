@@ -1,0 +1,23 @@
+package main.desafio08;
+
+import java.util.Scanner;
+
+import main.desafio08.service.MatriculaService;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        MatriculaService matriculaService = new MatriculaService();
+
+        matriculaService.welcome();
+
+        matriculaService.cadastrarAluno(sc);
+
+        matriculaService.cadastrarCurso(sc);
+
+        matriculaService.dadosFinais();
+        
+    }
+}

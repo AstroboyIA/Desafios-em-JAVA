@@ -1,0 +1,18 @@
+package main.desafio06.model;
+
+public class Cliente {
+    private String nome;
+
+    public String getNome() {
+        return nome;
+    }
+
+    public Cliente(String nome) {
+        this.nome = nome;
+    }
+    
+    public void finalizarCompra (Carrinho carrinho){
+    }
+}
+
+// Finalizado
