@@ -1,0 +1,55 @@
+-------------------------------------------------------------------------------
+Test set: desafio16.model.ChamadoSuporteTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 4, Skipped: 0, Time elapsed: 0.030 s <<< FAILURE! -- in desafio16.model.ChamadoSuporteTest
+desafio16.model.ChamadoSuporteTest.chamadoSemAtividadesDeveEstarAberto -- Time elapsed: 0.014 s <<< ERROR!
+java.lang.Error: 
+Unresolved compilation problems: 
+	ChamadoSuporte cannot be resolved to a type
+	ChamadoSuporte cannot be resolved to a type
+	StatusChamado cannot be resolved to a variable
+
+	at desafio16.model.ChamadoSuporteTest.chamadoSemAtividadesDeveEstarAberto(ChamadoSuporteTest.java:14)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+desafio16.model.ChamadoSuporteTest.deveCalcularProgressoCorretamente -- Time elapsed: 0.002 s <<< ERROR!
+java.lang.Error: 
+Unresolved compilation problems: 
+	ChamadoSuporte cannot be resolved to a type
+	ChamadoSuporte cannot be resolved to a type
+	AtividadeAtendimento cannot be resolved to a type
+	AtividadeAtendimento cannot be resolved to a type
+
+	at desafio16.model.ChamadoSuporteTest.deveCalcularProgressoCorretamente(ChamadoSuporteTest.java:32)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+desafio16.model.ChamadoSuporteTest.chamadoComAtividadesConcluidasDeveSerResolvido -- Time elapsed: 0.001 s <<< ERROR!
+java.lang.Error: 
+Unresolved compilation problems: 
+	ChamadoSuporte cannot be resolved to a type
+	ChamadoSuporte cannot be resolved to a type
+	AtividadeAtendimento cannot be resolved to a type
+	AtividadeAtendimento cannot be resolved to a type
+	StatusChamado cannot be resolved to a variable
+
+	at desafio16.model.ChamadoSuporteTest.chamadoComAtividadesConcluidasDeveSerResolvido(ChamadoSuporteTest.java:21)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+desafio16.model.ChamadoSuporteTest.indiceSlaNaoDeveUltrapassar100 -- Time elapsed: 0.001 s <<< ERROR!
+java.lang.Error: 
+Unresolved compilation problems: 
+	ChamadoSuporte cannot be resolved to a type
+	ChamadoSuporte cannot be resolved to a type
+	AtividadeAtendimento cannot be resolved to a type
+
+	at desafio16.model.ChamadoSuporteTest.indiceSlaNaoDeveUltrapassar100(ChamadoSuporteTest.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
