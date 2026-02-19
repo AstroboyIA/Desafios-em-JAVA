@@ -267,12 +267,18 @@ Main
 
 # ✅ Próximo Passo Integrado: Testes Automatizados (JUnit 5)
 
-Além do sistema funcionando no `Main`, você deve entregar testes automatizados.
+Além do sistema funcionando no `Main`, você deve entregar testes automatizados básicos.
+
+O objetivo aqui é:
+
+Aprender a validar regras do domínio com testes simples.
+
+Não é necessário testar tudo.
 
 ## Dependências mínimas
 
 * JUnit Jupiter (`junit-jupiter`)
-* Plugin Surefire configurado para rodar testes
+* Plugin Surefire já funcionando com mvn test
 
 ## Estrutura de testes esperada
 
@@ -286,36 +292,71 @@ src/test/java/desafio16/model/
 
 ## 🧪 Casos mínimos obrigatórios (JUnit 5)
 
+Total: 7 testes obrigatórios
+
 ### `AtividadeAtendimentoTest`
 
-1. Deve criar atividade válida.
-2. Deve lançar exceção para descrição vazia.
-3. Deve lançar exceção para estimado <= 0.
-4. Deve lançar exceção para executado < 0.
-5. Deve lançar exceção para executado > estimado.
+1. Deve criar atividade com:
+
+Descrição válida
+minutosEstimados > 0
+minutosExecutados dentro do limite
+
+Esperado: Objeto criado com sucesso.
+
+2. Deve lançar exceção para estimado <= 0:
+
+Esperado: assertThrows(IllegalArgumentException.class, ...)
+
+3. Deve lançar exceção para executado maior que estimado:
+
+Esperado: assertThrows(IllegalArgumentException.class, ...)
 
 ### `ChamadoSuporteTest`
 
-6. Deve criar chamado válido.
-7. Deve lançar exceção para SLA <= 0.
-8. Sem atividades, status deve ser ABERTO.
-9. Com atividades parciais, status deve ser EM_ATENDIMENTO.
-10. Com atividades completas, status deve ser RESOLVIDO.
-11. Situação de SLA deve ser DENTRO_DO_SLA.
-12. Situação de SLA deve ser NO_LIMITE.
-13. Situação de SLA deve ser ESTOURADO.
-14. Índice de consumo deve limitar em 100.
-15. Não deve permitir adicionar atividade com chamado resolvido.
+4. Sem atividades -> Status deve ser ABERTO
+
+Criar chamado válido sem atividades.
+
+Esperado: StatusChamado.ABERTO
+
+5. Com atividades totalmente concluídas -> Status RESOLVIDO
+
+Adicionar atividade com:
+
+minutosExecutados == minutosEstimados
+
+Esperado: StatusChamado.RESOLVIDO
+
+6. Progresso deve calcular corretamente
+
+Cenário exemplo:
+
+Total estimado: 200
+Total executado: 100
+
+Esperado: 50
+
+7. Índice de consumo do SLA deve limitar em 100
+
+Cenário exemplo:
+
+SLA: 100
+Tempo executado: 150
+
+Esperado: 100. Mesmo se cálculo matemático ultrapassar 100.
 
 ---
 
 # 🚦 O que você NÃO deve fazer
 
-❌ Colocar regra de status/SLA/risco no service
-❌ Fazer validação principal no Main
-❌ Expor lista interna mutável
-❌ Fazer apenas teste manual no terminal
-❌ Entregar sem `src/test` com JUnit 5
+❌ Testar todos os valores dos enums
+❌ Testar todos os cenários de SLA
+❌ Testar camada Service
+❌ Testar Main
+❌ Usar testes parametrizados
+❌ Usar mocks
+❌Aplicar TDD formal
 
 ---
 

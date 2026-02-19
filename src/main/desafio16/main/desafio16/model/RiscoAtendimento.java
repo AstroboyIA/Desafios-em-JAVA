@@ -1,17 +1,18 @@
 package main.desafio16.model;
 
-public enum SituacaoSLA {
-    DENTRO_DO_SLA("Dentro do SLA"),
-    NO_LIMITE("No limíte"),
-    ESTOURADO("Estourado");
+public enum RiscoAtendimento {
+    BAIXO("Baixo Risco"),
+    MEDIO("Médio Risco"),
+    ALTO("Alto Risco");
 
     private String descricao;
 
-    private SituacaoSLA(String descricao) {
+    private RiscoAtendimento(String descricao) {
         this.descricao = descricao;
     }
 
     public String getDescricao() {
         return descricao;
     }
+
 }

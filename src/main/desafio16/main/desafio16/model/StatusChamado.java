@@ -1,18 +1,17 @@
 package main.desafio16.model;
 
-public enum RiscoAtendimento {
-    BAIXO("Baixo Risco"),
-    MEDIO("Médio Risco"),
-    ALTO("Alto Risco");
+public enum StatusChamado {
+    ABERTO("Aberto"),
+    EM_ATENDIMENTO("Em atendimento"),
+    RESOLVIDO("Resolvido");
 
     private String descricao;
 
-    private RiscoAtendimento(String descricao) {
+    private StatusChamado(String descricao) {
         this.descricao = descricao;
     }
 
     public String getDescricao() {
         return descricao;
     }
-
 }

@@ -29,6 +29,7 @@ public class AtividadeAtendimento {
 
         if (minutosEstimados < 0) {
             System.out.println("Os minutos estimados, não podem ser negativos.");
+            throw new IllegalArgumentException();
         }
 
         if (minutosExecutados < 0) {
