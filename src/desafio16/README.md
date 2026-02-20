@@ -55,6 +55,11 @@ public void adicionarAtividade(AtividadeAtendimento atividade)
 * Não é permitido adicionar atividade após o chamado estar RESOLVIDO.
 * Não é permitido remover atividade.
 
+### 📎 Contrato de exceções (obrigatório)
+
+* Ao tentar adicionar atividade `null` -> lançar `IllegalArgumentException`.
+* Ao tentar adicionar atividade com chamado já `RESOLVIDO` -> lançar `IllegalStateException`.
+
 ---
 
 # 📌 AtividadeAtendimento
@@ -90,6 +95,12 @@ Enum:
 
 ```java
 StatusChamado
+```
+
+Assinatura obrigatória:
+
+```java
+public StatusChamado getStatus()
 ```
 
 Valores:
@@ -165,6 +176,12 @@ Enum:
 SituacaoSLA
 ```
 
+Assinatura obrigatória:
+
+```java
+public SituacaoSLA getSituacaoSLA()
+```
+
 Valores:
 
 * DENTRO_DO_SLA
@@ -203,6 +220,11 @@ Regras adicionais:
 * Resultado limitado entre 0 e 100
 * Divisão inteira (truncada)
 
+Observação de consistência:
+
+* O construtor de `ChamadoSuporte` deve validar `slaMinutos > 0`.
+* A regra `slaMinutos = 0 -> 0` é defensiva (para evitar erro de divisão), mesmo não sendo cenário válido de criação.
+
 ---
 
 ## 🔹 Regra 7 — Risco de Atendimento
@@ -211,6 +233,12 @@ Enum:
 
 ```java
 RiscoAtendimento
+```
+
+Assinatura obrigatória:
+
+```java
+public RiscoAtendimento getRiscoAtendimento()
 ```
 
 Valores:
@@ -249,6 +277,8 @@ Não retornar texto hardcoded em service/Main.
 
 # 🧱 Estrutura Esperada
 
+### Estrutura de domínio (conceitual)
+
 ```
 model/
  ├── ChamadoSuporte
@@ -262,6 +292,39 @@ service/
 
 Main
 ```
+
+### Estrutura usada neste repositório
+
+```text
+desafio16/
+ ├── main/
+ │    ├── model/
+ │    │    ├── ChamadoSuporte.java
+ │    │    ├── AtividadeAtendimento.java
+ │    │    ├── StatusChamado.java
+ │    │    ├── SituacaoSLA.java
+ │    │    └── RiscoAtendimento.java
+ │    └── service/
+ │         └── AtendimentoService.java
+ └── micro-testes/
+      └── src/test/java/desafio16/model/
+           ├── ChamadoSuporteTest.java
+           └── AtividadeAtendimentoTest.java
+```
+
+Pacotes esperados para o domínio:
+
+```java
+package main.desafio16.model;
+```
+
+Pacote dos testes:
+
+```java
+package desafio16.model;
+```
+
+Com imports explícitos para as classes do domínio.
 
 ---
 
@@ -293,6 +356,12 @@ src/test/java/desafio16/model/
 ## 🧪 Casos mínimos obrigatórios (JUnit 5)
 
 Total: 7 testes obrigatórios
+
+Pré-requisito para os testes compilarem:
+
+* `ChamadoSuporte` deve expor `getStatus()`.
+* `ChamadoSuporte` deve expor `calcularProgressoAtendimento()` e `calcularIndiceConsumoSLA()`.
+* `AtividadeAtendimento` deve possuir construtor validando as invariantes.
 
 ### `AtividadeAtendimentoTest`
 
@@ -356,7 +425,7 @@ Esperado: 100. Mesmo se cálculo matemático ultrapassar 100.
 ❌ Testar Main
 ❌ Usar testes parametrizados
 ❌ Usar mocks
-❌Aplicar TDD formal
+❌ Aplicar TDD formal
 
 ---
 

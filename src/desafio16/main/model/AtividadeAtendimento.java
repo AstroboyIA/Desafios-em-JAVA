@@ -27,12 +27,12 @@ public class AtividadeAtendimento {
             throw new IllegalArgumentException();
         }
 
-        if (minutosEstimados < 0) {
+        if (minutosEstimados <= 0) {
             System.out.println("Os minutos estimados, não podem ser negativos.");
             throw new IllegalArgumentException();
         }
 
-        if (minutosExecutados < 0) {
+        if (minutosExecutados <= 0) {
             System.out.println("Os minutos executados, não podem ser negativos.");
             throw new IllegalArgumentException();
         }

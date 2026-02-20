@@ -23,8 +23,9 @@ public class ChamadoSuporte {
             throw new IllegalArgumentException();
         }
 
-        if (slaMinutos < 0) {
+        if (slaMinutos <= 0) {
             System.out.println("O SLA não pode ser menor que 0.");
+            throw new IllegalArgumentException();
         }
     }
 
@@ -32,6 +33,16 @@ public class ChamadoSuporte {
 
     public void adicionarAtividade(AtividadeAtendimento atividade) {
         atividades.add(atividade);
+
+        if (atividades.isEmpty() || atividades == "") {
+            System.out.println("A atividade não pode ficar vazia.");
+            throw new IllegalArgumentException();
+        }
+
+        if (StatusChamado == StatusChamado.RESOLVIDO) {
+            System.out.println("Não é possivel adicionar atividade após o chamado ser resolvido!");
+            throw new IllegalStateException();
+        }
     }
 
     public int calcularProgressoAtendimento() {
@@ -81,14 +92,50 @@ public class ChamadoSuporte {
 
     public int calcularIndiceConsumoSLA() {
 
-        int calcularSLA = (calcularTempoExecutadoTotal() * 100) / slaMinutos;
-        
         if (slaMinutos == 0)
             return 0;
+
+        int calcularSLA = (calcularTempoExecutadoTotal() * 100) / slaMinutos;
 
         if (calcularSLA > 100)
             return 100;
 
         return calcularSLA;
+    }
+
+    public StatusChamado getStatus() {
+
+        if (atividades.isEmpty())
+            return StatusChamado.ABERTO;
+
+        if (!atividades.isEmpty() && calcularTempoExecutadoTotal() == 0)
+            return StatusChamado.ABERTO;
+
+        if (calcularPrevisaoTotalMinutos() == calcularTempoExecutadoTotal())
+            return StatusChamado.RESOLVIDO;
+
+        return StatusChamado.EM_ATENDIMENTO;
+    }
+
+    public SituacaoSLA getSituacaoSLA() {
+
+        if (calcularPrevisaoTotalMinutos() < slaMinutos)
+            return SituacaoSLA.DENTRO_DO_SLA;
+
+        if (calcularPrevisaoTotalMinutos() == slaMinutos)
+            return SituacaoSLA.NO_LIMITE;
+
+        return SituacaoSLA.ESTOURADO;
+    }
+
+    public RiscoAtendimento getRiscoAtendimento() {
+
+        if (getSituacaoSLA() == SituacaoSLA.DENTRO_DO_SLA)
+            return RiscoAtendimento.BAIXO;
+
+        if (getSituacaoSLA() == SituacaoSLA.NO_LIMITE)
+            return RiscoAtendimento.MEDIO;
+
+        return RiscoAtendimento.ALTO;
     }
 }
