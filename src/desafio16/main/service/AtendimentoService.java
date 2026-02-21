@@ -26,12 +26,12 @@ public class AtendimentoService {
         slaMinutos = sc.nextInt();
         sc.nextLine();
         ChamadoSuporte chamado = new ChamadoSuporte(protocolo, cliente, slaMinutos);
-        System.out.println("Chamado criado com sucesso!");
+        System.out.println("\nChamado criado com sucesso!");
         
         return chamado;
     }
 
-    public AtividadeAtendimento criarAtividadeAtendimento(Scanner sc) {
+    public AtividadeAtendimento criarAtividadeAtendimento(Scanner sc, ChamadoSuporte chamado) {
 
         String descricao;
         int minutosEstimados;
@@ -40,18 +40,32 @@ public class AtendimentoService {
         System.out.println("\nAgora crie as atividades que compõem o chamado.");
         System.out.println("\nQual o nome da atividade?:");
         descricao = sc.nextLine();
-        System.out.println("Qual a estimativa em minutos, de execução da atividade?:");
+        System.out.println("\nQual a estimativa em minutos, de execução da atividade?:");
         minutosEstimados = sc.nextInt();
         sc.nextLine();
-        System.out.println("Em quanto tempo a atividade foi executada?:");
+        System.out.println("\nEm quanto tempo a atividade foi executada?:");
         minutosExecutados = sc.nextInt();
         sc.nextLine();
         AtividadeAtendimento atividade = new AtividadeAtendimento(descricao, minutosEstimados, minutosExecutados);
+        chamado.adicionarAtividade(atividade);
+        System.out.println("\nAtividade criada e adicionada ao chamado com sucesso!");
         
         return atividade;
     }
 
-    public void resumoFinal() {
+    public void resumoFinal(ChamadoSuporte chamado) {
+        
+        System.out.println("\nResumo final do chamado:");
+        System.out.println("--------------------------------------------------");
+        System.out.println("\nChamado: "+ chamado.getProtocolo()+ " - " + chamado.getCliente());
+        System.out.println("Status: " + chamado.getStatus().getDescricao());
+        System.out.println("Progresso: "+ chamado.calcularProgressoAtendimento() + "%");
+        System.out.println("Previsão total: " + chamado.calcularPrevisaoTotalMinutos() + "min");
+        System.out.println("SLA planejado: " + chamado.getSlaMinutos() + "min");
+        System.out.println("Situação SLA: " +chamado.getSituacaoSLA().getDescricao());
+        System.out.println("Risco de atendimento: " + chamado.getRiscoAtendimento().getDescricao());
+        System.out.println("Índice de consumo do SLA: " + chamado.calcularIndiceConsumoSLA() + "%");
+        System.out.println("--------------------------------------------------");
         
     }
 }

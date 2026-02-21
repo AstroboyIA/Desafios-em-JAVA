@@ -7,6 +7,18 @@ public class ChamadoSuporte {
     private String protocolo;
     private String cliente;
     private int slaMinutos;
+    
+    public String getProtocolo() {
+        return protocolo;
+    }
+
+    public String getCliente() {
+        return cliente;
+    }
+
+    public int getSlaMinutos() {
+        return slaMinutos;
+    }
 
     public ChamadoSuporte(String protocolo, String cliente, int slaMinutos) {
 
