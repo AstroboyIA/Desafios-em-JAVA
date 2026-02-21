@@ -18,11 +18,8 @@ public class AtividadeAtendimento {
     }
 
     public AtividadeAtendimento(String descricao, int minutosEstimados, int minutosExecutados) {
-        this.descricao = descricao;
-        this.minutosEstimados = minutosEstimados;
-        this.minutosExecutados = minutosExecutados;
 
-        if (descricao.isEmpty() || descricao == "") {
+        if (descricao == null || descricao.isEmpty()) {
             System.out.println("Descrição não pode ficar vazia.");
             throw new IllegalArgumentException();
         }
@@ -32,7 +29,7 @@ public class AtividadeAtendimento {
             throw new IllegalArgumentException();
         }
 
-        if (minutosExecutados <= 0) {
+        if (minutosExecutados < 0) {
             System.out.println("Os minutos executados, não podem ser negativos.");
             throw new IllegalArgumentException();
         }
@@ -41,5 +38,10 @@ public class AtividadeAtendimento {
             System.out.println("O tempo de execução não pode ser maior que o tempo estimado.");
             throw new IllegalArgumentException();
         }
+
+        this.descricao = descricao;
+        this.minutosEstimados = minutosEstimados;
+        this.minutosExecutados = minutosExecutados;
+
     }
 }

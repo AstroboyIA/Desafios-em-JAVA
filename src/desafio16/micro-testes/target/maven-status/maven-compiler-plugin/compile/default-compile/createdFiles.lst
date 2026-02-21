@@ -1,1 +1,5 @@
+main/desafio16/model/StatusChamado.class
+main/desafio16/model/SituacaoSLA.class
 main/desafio16/model/AtividadeAtendimento.class
+main/desafio16/model/RiscoAtendimento.class
+main/desafio16/model/ChamadoSuporte.class

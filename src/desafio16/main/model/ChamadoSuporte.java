@@ -9,40 +9,43 @@ public class ChamadoSuporte {
     private int slaMinutos;
 
     public ChamadoSuporte(String protocolo, String cliente, int slaMinutos) {
-        this.protocolo = protocolo;
-        this.cliente = cliente;
-        this.slaMinutos = slaMinutos;
 
-        if (protocolo.isEmpty() || protocolo == "") {
+        if (protocolo == null  || protocolo.isEmpty()) {
             System.out.println("Prococolo não pode ser nulo.");
             throw new IllegalArgumentException();
         }
 
-        if (cliente.isEmpty() || cliente == "") {
+        if (cliente == null || cliente.isEmpty()) {
             System.out.println("Cliente não pode ser nulo.");
             throw new IllegalArgumentException();
         }
 
         if (slaMinutos <= 0) {
-            System.out.println("O SLA não pode ser menor que 0.");
+            System.out.println("O SLA deve ser maior que zero.");
             throw new IllegalArgumentException();
         }
+
+        this.protocolo = protocolo;
+        this.cliente = cliente;
+        this.slaMinutos = slaMinutos;
+
     }
 
     private List<AtividadeAtendimento> atividades = new ArrayList<>();
 
     public void adicionarAtividade(AtividadeAtendimento atividade) {
-        atividades.add(atividade);
 
-        if (atividades.isEmpty() || atividades == "") {
-            System.out.println("A atividade não pode ficar vazia.");
+        if (atividade == null) {
+            System.out.println("A atividade não pode ser nula.");
             throw new IllegalArgumentException();
         }
 
-        if (StatusChamado == StatusChamado.RESOLVIDO) {
+        if (getStatus() == StatusChamado.RESOLVIDO) {
             System.out.println("Não é possivel adicionar atividade após o chamado ser resolvido!");
             throw new IllegalStateException();
         }
+
+        atividades.add(atividade);
     }
 
     public int calcularProgressoAtendimento() {
