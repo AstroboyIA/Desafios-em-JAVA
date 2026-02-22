@@ -7,6 +7,10 @@ public class EtapaDeploy {
     private final int minutosExecutados;
     private final CriticidadeEtapa criticidade;
 
+    public CriticidadeEtapa getCriticidade() {
+        return criticidade;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -20,7 +24,7 @@ public class EtapaDeploy {
     }
 
     public EtapaDeploy(String nome, int minutosEstimados, int minutosExecutados, CriticidadeEtapa criticidade) {
-        
+
         if (nome == null || nome.isEmpty()) {
             throw new IllegalArgumentException("O nome da etapa não pode ser nulo.");
         }
@@ -40,10 +44,14 @@ public class EtapaDeploy {
         if (criticidade == null) {
             throw new IllegalArgumentException("A criticidade da etapa não pode ser nula.");
         }
-        
+
         this.nome = nome;
         this.minutosEstimados = minutosEstimados;
         this.minutosExecutados = minutosExecutados;
         this.criticidade = criticidade;
+    }
+
+    public boolean etapaIsConcluida() {
+        return minutosExecutados == minutosEstimados;
     }
 }

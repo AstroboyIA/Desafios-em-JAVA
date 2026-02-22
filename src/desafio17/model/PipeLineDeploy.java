@@ -39,7 +39,7 @@ public class PipeLineDeploy {
             throw new IllegalArgumentException("A etapa não pode ser nula.");
         }
 
-        if (condition) {
+        if (getStatus() == StatusPipeLine.CONCLUIDO) {
             throw new IllegalStateException("Não é permitido adicionar etapa após o pipeline estar finalizado.");
         }
 
@@ -48,11 +48,20 @@ public class PipeLineDeploy {
 
     public StatusPipeLine getStatus() {
 
+        boolean todasConcluidas = true;
+
+        for (EtapaDeploy etapa : etapas) {
+            if (!etapa.etapaIsConcluida()) {
+                todasConcluidas = false;
+                break;
+            }
+        }
+
         if (etapas.isEmpty()) {
             return StatusPipeLine.ABERTO;
         } else if (calcularTempoExecutadoPonderado() == 0) {
             return StatusPipeLine.ABERTO;
-        } else if (calcularTempoExecutadoPonderado() == calcularPrevisaoTotalPonderada()) {
+        } else if (todasConcluidas) {
             return StatusPipeLine.CONCLUIDO;
         } else {
             return StatusPipeLine.EM_EXECUCAO;
@@ -67,10 +76,10 @@ public class PipeLineDeploy {
             return 0;
 
         for (EtapaDeploy etapa : etapas) {
-            totalPonderado += etapa.getMinutosEstimados();
+            totalPonderado += etapa.getMinutosEstimados() * etapa.getCriticidade().getPeso();
         }
 
-        return totalPonderado * criticidade.getPeso();
+        return totalPonderado;
     }
 
     public int calcularTempoExecutadoPonderado() {
@@ -81,10 +90,10 @@ public class PipeLineDeploy {
             return 0;
 
         for (EtapaDeploy etapa : etapas) {
-            totalExecutado += etapa.getMinutosExecutados();
+            totalExecutado += etapa.getMinutosExecutados() * etapa.getCriticidade().getPeso();
         }
 
-        return totalExecutado * criticidade.getPeso();
+        return totalExecutado;
     }
 
     public int calcularProgressoDeploy() {
@@ -130,12 +139,33 @@ public class PipeLineDeploy {
 
     public RiscoOperacionalDeploy getRiscoOperacional() {
 
+        RiscoOperacionalDeploy risco;
+
         if (getSituacaoJanela() == SituacaoJanela.DENTRO_DA_JANELA) {
-            return RiscoOperacionalDeploy.BAIXO;
+            risco = RiscoOperacionalDeploy.BAIXO;
         } else if (getSituacaoJanela() == SituacaoJanela.NO_LIMITE) {
-            return RiscoOperacionalDeploy.MEDIO;
+            risco = RiscoOperacionalDeploy.MEDIO;
         } else {
-            return RiscoOperacionalDeploy.ALTO;
+            risco = RiscoOperacionalDeploy.ALTO;
         }
+
+        boolean existeAltaPendente = false;
+
+        for (EtapaDeploy etapa : etapas) {
+            if (etapa.getCriticidade() == CriticidadeEtapa.ALTA && !etapa.etapaIsConcluida()) {
+                existeAltaPendente = true;
+                break;
+            }
+        }
+        if (existeAltaPendente && calcularIndiceConsumoJanela() >= 80) {
+
+            if (risco == RiscoOperacionalDeploy.BAIXO) {
+                risco = RiscoOperacionalDeploy.MEDIO;
+            } else if (risco == RiscoOperacionalDeploy.MEDIO) {
+                risco = RiscoOperacionalDeploy.ALTO;
+            }
+        }
+
+        return risco;
     }
 }
