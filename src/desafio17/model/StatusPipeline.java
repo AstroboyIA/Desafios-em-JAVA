@@ -1,6 +1,6 @@
 package desafio17.model;
 
-public enum StatusPipeLine {
+public enum StatusPipeline {
     ABERTO("Aberto"),
     EM_EXECUCAO("Em execução"),
     CONCLUIDO("Concluído");
@@ -11,7 +11,7 @@ public enum StatusPipeLine {
         return descricao;
     }
 
-    private StatusPipeLine(String descricao) {
+    private StatusPipeline(String descricao) {
         this.descricao = descricao;
     }
 }

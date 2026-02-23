@@ -1,4 +1,4 @@
-package desafio16.main.service;
+package desafio16.service;
 
 import java.util.Scanner;
 

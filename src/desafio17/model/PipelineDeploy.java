@@ -3,26 +3,35 @@ package desafio17.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PipeLineDeploy {
+public class PipelineDeploy {
 
     private final String idExecucao;
     private final String sistema;
     private final int janelaMudancaMinutos;
 
-    public PipeLineDeploy(String idExecucao, String sistema, int janelaMudancaMinutos) {
+    public String getIdExecucao() {
+        return idExecucao;
+    }
+
+    public String getSistema() {
+        return sistema;
+    }
+
+    public int getJanelaMudancaMinutos() {
+        return janelaMudancaMinutos;
+    }
+
+    public PipelineDeploy(String idExecucao, String sistema, int janelaMudancaMinutos) {
 
         if (idExecucao == null || idExecucao.isEmpty()) {
-            System.out.println("O ID não pode ser nulo.");
             throw new IllegalArgumentException("O ID não pode ser nulo.");
         }
 
         if (sistema == null || sistema.isEmpty()) {
-            System.out.println("O sistema não pode ser nulo.");
             throw new IllegalArgumentException("O sistema não pode ser nulo.");
         }
 
         if (janelaMudancaMinutos <= 0) {
-            System.out.println("A janela de mudança deve ser maior que zero.");
             throw new IllegalArgumentException("A janela de mudança deve ser maior que zero.");
         }
 
@@ -39,14 +48,14 @@ public class PipeLineDeploy {
             throw new IllegalArgumentException("A etapa não pode ser nula.");
         }
 
-        if (getStatus() == StatusPipeLine.CONCLUIDO) {
+        if (getStatus() == StatusPipeline.CONCLUIDO) {
             throw new IllegalStateException("Não é permitido adicionar etapa após o pipeline estar finalizado.");
         }
 
         etapas.add(etapa);
     }
 
-    public StatusPipeLine getStatus() {
+    public StatusPipeline getStatus() {
 
         boolean todasConcluidas = true;
 
@@ -58,13 +67,13 @@ public class PipeLineDeploy {
         }
 
         if (etapas.isEmpty()) {
-            return StatusPipeLine.ABERTO;
+            return StatusPipeline.ABERTO;
         } else if (calcularTempoExecutadoPonderado() == 0) {
-            return StatusPipeLine.ABERTO;
+            return StatusPipeline.ABERTO;
         } else if (todasConcluidas) {
-            return StatusPipeLine.CONCLUIDO;
+            return StatusPipeline.CONCLUIDO;
         } else {
-            return StatusPipeLine.EM_EXECUCAO;
+            return StatusPipeline.EM_EXECUCAO;
         }
     }
 

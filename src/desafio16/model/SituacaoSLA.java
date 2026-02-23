@@ -1,4 +1,4 @@
-package main.desafio16.model;
+package desafio16.model;
 
 public enum SituacaoSLA {
     DENTRO_DO_SLA("Dentro do SLA"),

@@ -4,7 +4,7 @@ public class EtapaDeploy {
 
     private final String nome;
     private final int minutosEstimados;
-    private final int minutosExecutados;
+    private int minutosExecutados;
     private final CriticidadeEtapa criticidade;
 
     public CriticidadeEtapa getCriticidade() {

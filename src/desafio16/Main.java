@@ -1,9 +1,10 @@
-package desafio16.main;
+package desafio16;
 
 import java.util.Scanner;
 
-import desafio16.main.service.AtendimentoService;
-import main.desafio16.model.ChamadoSuporte;
+import desafio16.model.ChamadoSuporte;
+import desafio16.service.AtendimentoService;
+
 
 public class Main {
     public static void main(String[] args) {

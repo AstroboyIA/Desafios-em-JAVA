@@ -1,4 +1,4 @@
-package main.desafio16.model;
+package desafio16.model;
 
 import java.util.ArrayList;
 import java.util.List;

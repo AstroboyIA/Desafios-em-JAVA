@@ -249,8 +249,7 @@ Assinatura:
 public RiscoOperacionalDeploy getRiscoOperacional()
 ```
 
-### Etapa 1 — Risco Base (derif (etapas.isEmpty())
-            return 0;ivado da Situação da Janela)
+### Etapa 1 — Risco Base
 
 * DENTRO_DA_JANELA → BAIXO
 * NO_LIMITE → MEDIO
