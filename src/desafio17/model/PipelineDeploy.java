@@ -66,9 +66,18 @@ public class PipelineDeploy {
             }
         }
 
+        boolean todasNaoIniciadas = true;
+
+        for (EtapaDeploy etapa : etapas) {
+            if (etapa.getMinutosExecutados() > 0) {
+                todasNaoIniciadas = false;
+                break;
+            }
+        }
+
         if (etapas.isEmpty()) {
             return StatusPipeline.ABERTO;
-        } else if (calcularTempoExecutadoPonderado() == 0) {
+        } else if (calcularTempoExecutadoPonderado() == 0 && todasNaoIniciadas) {
             return StatusPipeline.ABERTO;
         } else if (todasConcluidas) {
             return StatusPipeline.CONCLUIDO;
@@ -150,9 +159,11 @@ public class PipelineDeploy {
 
         RiscoOperacionalDeploy risco;
 
-        if (getSituacaoJanela() == SituacaoJanela.DENTRO_DA_JANELA) {
+        SituacaoJanela situacao = getSituacaoJanela();
+
+        if (situacao == SituacaoJanela.DENTRO_DA_JANELA) {
             risco = RiscoOperacionalDeploy.BAIXO;
-        } else if (getSituacaoJanela() == SituacaoJanela.NO_LIMITE) {
+        } else if (situacao == SituacaoJanela.NO_LIMITE) {
             risco = RiscoOperacionalDeploy.MEDIO;
         } else {
             risco = RiscoOperacionalDeploy.ALTO;
