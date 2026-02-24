@@ -61,24 +61,27 @@ public class IncidenteOperacional {
         return StatusIncidente.EM_TRATAMENTO;
     }
 
-    public int calcularIndiceExecucao(TipoAcao tipo) {
+    public int calcularIndiceExecucao() {
 
-        int minutosExecutados = 0;
-        int minutosPlanejados = 0;
+        int executadosPonderado = 0;
+        int planejadoPoderado = 0;
+        int resultado = 0;
+        int peso = 0;
 
         for (AcaoResposta acao : acoes) {
-            minutosExecutados += acao.getMinutosExecutados();
-            minutosPlanejados += acao.getMinutosPlanejados();
-        }
-        if (minutosPlanejados == 0) {
-            return 0;
+            peso = acao.getTipo().getPesoImpacto();
+            executadosPonderado += acao.getMinutosExecutados() * peso;
+            planejadoPoderado += acao.getMinutosPlanejados() * peso;
         }
 
-        int resultado = (minutosExecutados * tipo.getPesoImpacto()) / (minutosPlanejados * tipo.getPesoImpacto()) * 100;
+        if (planejadoPoderado == 0) return 0;
+        
 
-        if (resultado > 100) {
-            resultado = 100;
-        }
+        resultado = (executadosPonderado * 100) / planejadoPoderado;
+
+        if (resultado > 100) resultado = 100;
+        if (resultado < 0) resultado = 0;
+    
 
         return resultado;
     }
@@ -116,7 +119,7 @@ public class IncidenteOperacional {
 
         if (saturacao >= 70 && saturacao <= 99) {
             nivelRisco = NivelRiscoIncidente.ATENCAO;
-        }  
+        }
 
         if (saturacao >= 100 && saturacao <= 149) {
             nivelRisco = NivelRiscoIncidente.CRITICO;
@@ -155,5 +158,20 @@ public class IncidenteOperacional {
         }
 
         return nivelRisco;
+    }
+
+    public int calcularIndiceEficiencia() {
+
+        int eficiencia = 0;
+
+        eficiencia = calcularIndiceExecucao() - calcularSaturacao();
+
+        if (eficiencia < -100)
+            eficiencia = -100;
+
+        if (eficiencia > 100)
+            eficiencia = 100;
+
+        return eficiencia;
     }
 }
