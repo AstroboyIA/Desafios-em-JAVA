@@ -2,8 +2,8 @@ package desafio16.service;
 
 import java.util.Scanner;
 
-import main.desafio16.model.AtividadeAtendimento;
-import main.desafio16.model.ChamadoSuporte;
+import desafio16.model.AtividadeAtendimento;
+import desafio16.model.ChamadoSuporte;
 
 public class AtendimentoService {
 

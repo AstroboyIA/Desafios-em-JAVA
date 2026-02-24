@@ -1,4 +1,4 @@
-package main.desafio15.model;
+package desafio15.model;
 
 public class EtapaProducao {
     String descricaoEtapa;
