@@ -1,9 +1,9 @@
-package main.desafio14;
+package desafio14;
 
 import java.util.Scanner;
 
-import main.desafio14.model.Projeto;
-import main.desafio14.service.ProjetoService;
+import desafio14.model.Projeto;
+import desafio14.service.ProjetoService;
 
 public class Main {
     public static void main(String[] args) {

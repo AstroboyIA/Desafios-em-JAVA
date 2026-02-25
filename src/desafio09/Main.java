@@ -1,9 +1,9 @@
-package main.desafio09;
+package desafio09;
 
 import java.util.Scanner;
 
-import main.desafio09.model.Boletim;
-import main.desafio09.service.BoletimService;
+import desafio09.model.Boletim;
+import desafio09.service.BoletimService;
 
 public class Main {
     public static void main(String[] args) {

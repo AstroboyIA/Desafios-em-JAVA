@@ -1,10 +1,10 @@
-package main.desafio10.service;
+package desafio10.service;
 
 import java.util.Scanner;
 
-import main.desafio10.model.Avaliacao;
-import main.desafio10.model.Funcionario;
-import main.desafio10.model.Relatorio;
+import desafio10.model.Avaliacao;
+import desafio10.model.Funcionario;
+import desafio10.model.Relatorio;
 
 public class RelatorioService {
 

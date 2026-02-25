@@ -1,10 +1,10 @@
-package main.desafio10;
+package desafio10;
 
 import java.util.Scanner;
 
-import main.desafio10.model.Funcionario;
-import main.desafio10.model.Relatorio;
-import main.desafio10.service.RelatorioService;
+import desafio10.model.Funcionario;
+import desafio10.model.Relatorio;
+import desafio10.service.RelatorioService;
 
 public class Main {
     public static void main(String[] args) {

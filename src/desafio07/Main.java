@@ -1,9 +1,9 @@
-package main.desafio07;
+package desafio07;
 
 import java.util.Scanner;
 
-import main.desafio07.model.Emprestimo;
-import main.desafio07.service.EmprestimoService;
+import desafio07.model.Emprestimo;
+import desafio07.service.EmprestimoService;
 
 public class Main {
     public static void main(String[] args) {

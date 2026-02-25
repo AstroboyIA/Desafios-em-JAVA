@@ -29,9 +29,8 @@ public class IncidenteOperacional {
         if (tempoDecorridoMinutos < 0)
             throw new IllegalArgumentException("O tempo decorrido não pode ser negativo.");
 
-        // if ()
-        // throw new IllegalStateException("Não é possível adicionar ações após o
-        // incidente estar encerrado.");
+        if (getStatus() == StatusIncidente.RESOLVIDO || getStatus() == StatusIncidente.ENCERRADO)
+            throw new IllegalStateException("Não é possível adicionar ações após o incidente estar encerrado.");
 
         this.codigo = codigo;
         this.servicoAfetado = servicoAfetado;
@@ -74,14 +73,15 @@ public class IncidenteOperacional {
             planejadoPoderado += acao.getMinutosPlanejados() * peso;
         }
 
-        if (planejadoPoderado == 0) return 0;
-        
+        if (planejadoPoderado == 0)
+            return 0;
 
         resultado = (executadosPonderado * 100) / planejadoPoderado;
 
-        if (resultado > 100) resultado = 100;
-        if (resultado < 0) resultado = 0;
-    
+        if (resultado > 100)
+            resultado = 100;
+        if (resultado < 0)
+            resultado = 0;
 
         return resultado;
     }
@@ -102,30 +102,17 @@ public class IncidenteOperacional {
         boolean isAgravante = false;
         NivelRiscoIncidente nivelRisco = null;
         boolean isRedutor = false;
-        boolean isConcluida = false;
-
-        for (AcaoResposta acao : acoes) {
-            if (acao.getMinutosExecutados() == acao.getMinutosPlanejados()) {
-                isConcluida = true;
-            }
-        }
 
         if (severidade == SeveridadeIncidente.CRITICA && saturacao >= 90)
             isAgravante = true;
 
         if (saturacao < 70) {
             nivelRisco = NivelRiscoIncidente.CONTROLADO;
-        }
-
-        if (saturacao >= 70 && saturacao <= 99) {
+        } else if (saturacao >= 70 && saturacao <= 99) {
             nivelRisco = NivelRiscoIncidente.ATENCAO;
-        }
-
-        if (saturacao >= 100 && saturacao <= 149) {
+        } else if (saturacao >= 100 && saturacao <= 149) {
             nivelRisco = NivelRiscoIncidente.CRITICO;
-        }
-
-        if (saturacao >= 150)
+        } else if (saturacao >= 150)
             nivelRisco = NivelRiscoIncidente.COLAPSO;
 
         if (isAgravante) {
@@ -135,13 +122,11 @@ public class IncidenteOperacional {
                 nivelRisco = NivelRiscoIncidente.CRITICO;
             } else if (nivelRisco == NivelRiscoIncidente.CRITICO) {
                 nivelRisco = NivelRiscoIncidente.COLAPSO;
-            } else if (nivelRisco == NivelRiscoIncidente.COLAPSO) {
-                nivelRisco = NivelRiscoIncidente.COLAPSO;
             }
         }
 
         for (AcaoResposta acao : acoes) {
-            if (acao.getTipo() == TipoAcao.CORRECAO && isConcluida == true) {
+            if (acao.getTipo().reduzRisco() && acao.getMinutosExecutados() >= acao.getMinutosPlanejados()) {
                 isRedutor = true;
                 break;
             }

@@ -1,9 +1,9 @@
-package main.desafio15.service;
+package desafio15.service;
 
 import java.util.Scanner;
 
-import main.desafio15.model.EtapaProducao;
-import main.desafio15.model.PedidoProducao;
+import desafio15.model.EtapaProducao;
+import desafio15.model.PedidoProducao;
 
 public class ProducaoService {
     

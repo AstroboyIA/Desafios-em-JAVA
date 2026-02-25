@@ -1,11 +1,11 @@
-package main.desafio11;
+package desafio11;
 
 import java.util.Scanner;
 
-import main.desafio11.model.Aluno;
-import main.desafio11.model.RegistroTreino;
-import main.desafio11.model.Treino;
-import main.desafio11.service.TreinoService;
+import desafio11.model.Aluno;
+import desafio11.model.RegistroTreino;
+import desafio11.model.Treino;
+import desafio11.service.TreinoService;
 
 public class Main {
     public static void main(String[] args) {

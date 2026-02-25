@@ -1,9 +1,9 @@
-package main.desafio12.model;
+package desafio12.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import main.desafio12.model.TamanhoProjeto;
+import desafio12.model.TamanhoProjeto;
 
 public class Projeto {
 

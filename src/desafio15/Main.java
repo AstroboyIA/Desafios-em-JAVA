@@ -1,10 +1,10 @@
-package main.desafio15;
+package desafio15;
 
 import java.util.Scanner;
 
-import main.desafio15.model.EtapaProducao;
-import main.desafio15.model.PedidoProducao;
-import main.desafio15.service.ProducaoService;
+import desafio15.model.EtapaProducao;
+import desafio15.model.PedidoProducao;
+import desafio15.service.ProducaoService;
 
 public class Main {
     public static void main(String[] args) {

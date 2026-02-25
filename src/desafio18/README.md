@@ -307,6 +307,10 @@ desafio18/
  │    ├── TipoAcao.java
  │    ├── StatusIncidente.java
  │    └── NivelRiscoIncidente.java
+ │
+ ├───service/
+ │    └──GestaoIncidenteService.java
+ │
  └── Main.java
 ```
 

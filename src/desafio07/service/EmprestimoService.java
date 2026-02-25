@@ -1,10 +1,10 @@
-package main.desafio07.service;
+package desafio07.service;
 
 import java.util.Scanner;
 
-import main.desafio07.model.Emprestimo;
-import main.desafio07.model.Leitor;
-import main.desafio07.model.Livro;
+import desafio07.model.Emprestimo;
+import desafio07.model.Leitor;
+import desafio07.model.Livro;
 
 public class EmprestimoService {
 

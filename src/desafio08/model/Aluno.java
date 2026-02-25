@@ -1,4 +1,4 @@
-package main.desafio08.model;
+package desafio08.model;
 
 public class Aluno {
     private String nome;

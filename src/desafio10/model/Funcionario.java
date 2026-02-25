@@ -1,4 +1,4 @@
-package main.desafio10.model;
+package desafio10.model;
 
 public class Funcionario {
     private String nome;

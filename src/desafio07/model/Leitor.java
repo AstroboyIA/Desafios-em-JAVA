@@ -1,4 +1,4 @@
-package main.desafio07.model;
+package desafio07.model;
 
 public class Leitor {
     private String nome;

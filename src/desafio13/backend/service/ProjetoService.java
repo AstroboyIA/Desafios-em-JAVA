@@ -1,9 +1,9 @@
-package main.desafio13.backend.service;
+package desafio13.backend.service;
 
 import java.util.Scanner;
 
-import main.desafio13.backend.model.Projeto;
-import main.desafio13.backend.model.Tarefa;
+import desafio13.backend.model.Projeto;
+import desafio13.backend.model.Tarefa;
 
 public class ProjetoService {
 

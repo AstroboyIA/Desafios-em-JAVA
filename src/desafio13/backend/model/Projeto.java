@@ -1,4 +1,4 @@
-package main.desafio13.backend.model;
+package desafio13.backend.model;
 
 import java.util.ArrayList;
 import java.util.List;

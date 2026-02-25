@@ -1,10 +1,10 @@
-package main.desafio12;
+package desafio12;
 
 import java.util.Scanner;
 
-import main.desafio12.model.Projeto;
-import main.desafio12.model.Tarefa;
-import main.desafio12.service.ProjetoService;
+import desafio12.model.Projeto;
+import desafio12.model.Tarefa;
+import desafio12.service.ProjetoService;
 
 public class Main {
     public static void main(String[] args) {

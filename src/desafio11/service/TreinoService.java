@@ -1,10 +1,10 @@
-package main.desafio11.service;
+package desafio11.service;
 
 import java.util.Scanner;
 
-import main.desafio11.model.Aluno;
-import main.desafio11.model.RegistroTreino;
-import main.desafio11.model.Treino;
+import desafio11.model.Aluno;
+import desafio11.model.RegistroTreino;
+import desafio11.model.Treino;
 
 public class TreinoService {
     

@@ -1,10 +1,10 @@
-package main.desafio09.service;
+package desafio09.service;
 
 import java.util.Scanner;
 
-import main.desafio09.model.Aluno;
-import main.desafio09.model.Boletim;
-import main.desafio09.model.Nota;
+import desafio09.model.Aluno;
+import desafio09.model.Boletim;
+import desafio09.model.Nota;
 
 public class BoletimService {
 

@@ -1,10 +1,10 @@
-package main.desafio08.service;
+package desafio08.service;
 
 import java.util.Scanner;
 
-import main.desafio08.model.Aluno;
-import main.desafio08.model.Curso;
-import main.desafio08.model.Matricula;
+import desafio08.model.Aluno;
+import desafio08.model.Curso;
+import desafio08.model.Matricula;
 
 public class MatriculaService {
 

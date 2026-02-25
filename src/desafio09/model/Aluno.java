@@ -1,4 +1,4 @@
-package main.desafio09.model;
+package desafio09.model;
 
 public class Aluno {
     private String nome;

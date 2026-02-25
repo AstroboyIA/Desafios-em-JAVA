@@ -1,10 +1,10 @@
-package main.desafio14.service;
+package desafio14.service;
 
 import java.util.List;
 import java.util.Scanner;
 
-import main.desafio14.model.Projeto;
-import main.desafio14.model.Tarefa;
+import desafio14.model.Projeto;
+import desafio14.model.Tarefa;
 
 public class ProjetoService {
     

@@ -1,8 +1,8 @@
-package main.desafio08;
+package desafio08;
 
 import java.util.Scanner;
 
-import main.desafio08.service.MatriculaService;
+import desafio08.service.MatriculaService;
 
 public class Main {
     public static void main(String[] args) {

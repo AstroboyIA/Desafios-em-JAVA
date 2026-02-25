@@ -1,4 +1,4 @@
-package main.desafio12.model;
+package desafio12.model;
 
 public enum TamanhoProjeto {
     PEQUENO("Pequeno"),
