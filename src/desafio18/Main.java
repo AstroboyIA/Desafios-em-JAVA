@@ -2,6 +2,7 @@ package desafio18;
 
 import java.util.Scanner;
 
+import desafio18.model.IncidenteOperacional;
 import desafio18.service.GestaoIncidenteService;
 
 public class Main {
@@ -11,5 +12,14 @@ public class Main {
         GestaoIncidenteService service = new GestaoIncidenteService();
         
         service.Welcome();
+
+        IncidenteOperacional incidente = service.criarIncidente(sc);
+
+        service.adicionarAcaoResposta(sc, incidente);
+
+        service.resumoFinal(incidente);
+
+        sc.close();
+        
     }
 }

@@ -11,6 +11,26 @@ public class IncidenteOperacional {
     private final int tempoSlaMinutos;
     private final int tempoDecorridoMinutos;
 
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public String getServicoAfetado() {
+        return servicoAfetado;
+    }
+
+    public SeveridadeIncidente getSeveridade() {
+        return severidade;
+    }
+
+    public int getTempoSlaMinutos() {
+        return tempoSlaMinutos;
+    }
+
+    public int getTempoDecorridoMinutos() {
+        return tempoDecorridoMinutos;
+    }
+
     public IncidenteOperacional(String codigo, String servicoAfetado, SeveridadeIncidente severidade,
             int tempoSlaMinutos, int tempoDecorridoMinutos) {
 
@@ -84,6 +104,18 @@ public class IncidenteOperacional {
             resultado = 0;
 
         return resultado;
+    }
+
+    public int calcularPenalidade() {
+
+        int penalidade = 0;
+
+        if (tempoDecorridoMinutos <= tempoSlaMinutos) {
+            penalidade = 0;
+        }else if (tempoDecorridoMinutos > tempoSlaMinutos) {
+            penalidade = (tempoDecorridoMinutos - tempoSlaMinutos) * severidade.getMultiplicadorPenalidade();
+        }
+        return penalidade;
     }
 
     public int calcularSaturacao() {

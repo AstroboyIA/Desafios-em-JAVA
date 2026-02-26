@@ -1,4 +1,4 @@
-package main.desafio05.model;
+package desafio05.model;
 
 public class Produto {
     String produto;

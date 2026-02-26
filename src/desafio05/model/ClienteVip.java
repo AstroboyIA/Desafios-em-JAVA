@@ -1,4 +1,4 @@
-package main.desafio05.model;
+package desafio05.model;
 
 // precisa receber valor final e aplicar 10% de desconto
 public class ClienteVip extends Cliente {

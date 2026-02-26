@@ -1,11 +1,11 @@
-package main.desafio05.service;
+package desafio05.service;
 
 import java.util.Scanner;
 
-import main.desafio05.model.Cliente;
-import main.desafio05.model.ClienteVip;
-import main.desafio05.model.Pedido;
-import main.desafio05.model.Produto;
+import desafio05.model.Cliente;
+import desafio05.model.ClienteVip;
+import desafio05.model.Pedido;
+import desafio05.model.Produto;
 
 public class PedidoService {
 

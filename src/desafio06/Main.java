@@ -1,10 +1,10 @@
-package main.desafio06;
+package desafio06;
 
 import java.util.Scanner;
 
-import main.desafio06.model.Carrinho;
-import main.desafio06.model.Cliente;
-import main.desafio06.service.CompraService;
+import desafio06.model.Carrinho;
+import desafio06.model.Cliente;
+import desafio06.service.CompraService;
 
 public class Main {
     public static void main(String[] args) {

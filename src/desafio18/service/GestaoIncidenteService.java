@@ -64,7 +64,10 @@ public class GestaoIncidenteService {
         tempoDecorridoMinutos = sc.nextInt();
         sc.nextLine();
 
-        return new IncidenteOperacional(codigo, servicoAfetado, severidade, tempoSlaMinutos, tempoDecorridoMinutos);
+        IncidenteOperacional incidente = new IncidenteOperacional(codigo, servicoAfetado, severidade, tempoSlaMinutos,
+                tempoDecorridoMinutos);
+
+        return incidente;
 
     }
 
@@ -115,6 +118,23 @@ public class GestaoIncidenteService {
                     System.out.print("Opção inválida. Por favor, escolha uma opção válida!");
             }
         }
-        return new AcaoResposta(descricao, minutosPlanejados, minutosExecutados, tipo);
+
+        AcaoResposta acaoResposta = new AcaoResposta(descricao, minutosPlanejados, minutosExecutados, tipo);
+
+        return acaoResposta;
+
+    }
+
+    public void resumoFinal(IncidenteOperacional incidente) {
+        System.out.println("\nResumo final do incidente e ações de resposta:");
+        System.out.println("\nIncidente: "+incidente.getCodigo());
+        System.out.println("Serviço afetado: "+incidente.getServicoAfetado());
+        System.out.println("Severidade: "+incidente.getSeveridade().getDescricao());
+        System.out.println("Status: "+incidente.getStatus().getDescricao());
+        System.out.println("Índice de execução: "+incidente.calcularIndiceExecucao()+"%");
+        System.out.println("Saturação operacional: "+incidente.calcularSaturacao()+"%");
+        System.out.println("Penalidade acumulada: "+incidente.calcularPenalidade());
+        System.out.println("Nível de risco: "+incidente.getNivelRisco().getDescricao());
+        System.out.println("Índice de eficiencia: "+incidente.calcularIndiceEficiencia());
     }
 }
