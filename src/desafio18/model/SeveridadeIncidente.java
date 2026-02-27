@@ -3,7 +3,7 @@ package desafio18.model;
 public enum SeveridadeIncidente {
     
     BAIXA(1, "Baixa"),
-    MEDIA(2, "Média"),
+    MODERADA(2, "Moderada"),
     ALTA(3, "Alta"),
     CRITICA(5, "Crítica");
 

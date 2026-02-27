@@ -43,14 +43,11 @@ public class IncidenteOperacional {
         if (severidade == null)
             throw new IllegalArgumentException("Severidade do incidente deve ser informada.");
 
-        if (tempoSlaMinutos < 0)
+        if (tempoSlaMinutos <= 0)
             throw new IllegalArgumentException("O tempo do SLA não pode ser negativo.");
 
         if (tempoDecorridoMinutos < 0)
             throw new IllegalArgumentException("O tempo decorrido não pode ser negativo.");
-
-        if (getStatus() == StatusIncidente.RESOLVIDO || getStatus() == StatusIncidente.ENCERRADO)
-            throw new IllegalStateException("Não é possível adicionar ações após o incidente estar encerrado.");
 
         this.codigo = codigo;
         this.servicoAfetado = servicoAfetado;
@@ -59,25 +56,37 @@ public class IncidenteOperacional {
         this.tempoDecorridoMinutos = tempoDecorridoMinutos;
     }
 
-    private final List<AcaoResposta> acoes = new ArrayList<>();
+    private List<AcaoResposta> acoes = new ArrayList<>();
+
+    public void adicionarAcoes(AcaoResposta acao) {
+
+        if (getStatus() == StatusIncidente.RESOLVIDO || getStatus() == StatusIncidente.ENCERRADO)
+            throw new IllegalStateException("Não é possível adicionar ações após o incidente estar encerrado.");
+
+        acoes.add(acao);
+    }
 
     public StatusIncidente getStatus() {
 
         int minutosExecutados = 0;
+        int minutosPlanejados = 0;
+
         for (AcaoResposta acao : acoes) {
             minutosExecutados += acao.getMinutosExecutados();
+            minutosPlanejados += acao.getMinutosPlanejados();
         }
 
-        if (acoes.isEmpty())
+        if (acoes.isEmpty()) {
             return StatusIncidente.ABERTO;
-
-        if (minutosExecutados == 0)
+        } else if (minutosExecutados == 0) {
             return StatusIncidente.ABERTO;
-
-        if (minutosExecutados >= tempoSlaMinutos)
+        } else if (tempoDecorridoMinutos > tempoSlaMinutos) {
+            return StatusIncidente.ENCERRADO;
+        } else if (minutosExecutados >= minutosPlanejados) {
             return StatusIncidente.RESOLVIDO;
-
-        return StatusIncidente.EM_TRATAMENTO;
+        } else {
+            return StatusIncidente.EM_TRATAMENTO;
+        }
     }
 
     public int calcularIndiceExecucao() {
@@ -112,7 +121,7 @@ public class IncidenteOperacional {
 
         if (tempoDecorridoMinutos <= tempoSlaMinutos) {
             penalidade = 0;
-        }else if (tempoDecorridoMinutos > tempoSlaMinutos) {
+        } else if (tempoDecorridoMinutos > tempoSlaMinutos) {
             penalidade = (tempoDecorridoMinutos - tempoSlaMinutos) * severidade.getMultiplicadorPenalidade();
         }
         return penalidade;

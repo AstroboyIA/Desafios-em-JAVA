@@ -2,6 +2,7 @@ package desafio18;
 
 import java.util.Scanner;
 
+import desafio18.model.AcaoResposta;
 import desafio18.model.IncidenteOperacional;
 import desafio18.service.GestaoIncidenteService;
 

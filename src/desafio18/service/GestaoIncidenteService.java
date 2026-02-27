@@ -41,7 +41,7 @@ public class GestaoIncidenteService {
                     opcaoValida = true;
                     break;
                 case 2:
-                    severidade = SeveridadeIncidente.MEDIA;
+                    severidade = SeveridadeIncidente.MODERADA;
                     opcaoValida = true;
                     break;
                 case 3:
@@ -120,6 +120,8 @@ public class GestaoIncidenteService {
         }
 
         AcaoResposta acaoResposta = new AcaoResposta(descricao, minutosPlanejados, minutosExecutados, tipo);
+
+        incidente.adicionarAcoes(acaoResposta);
 
         return acaoResposta;
 

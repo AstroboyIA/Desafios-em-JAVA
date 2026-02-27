@@ -39,8 +39,8 @@ public class AcaoResposta {
         if (minutosExecutados < 0)
             throw new IllegalArgumentException("Minutos executados não pode ser negativo.");
 
-        if (minutosExecutados <= minutosPlanejados)
-            throw new IllegalArgumentException("Tempo de execução deve ser maior que os minutos planejados.");
+        if (minutosExecutados > minutosPlanejados)
+            throw new IllegalArgumentException("Tempo de execução deve ser menor que os minutos planejados.");
 
         if (tipo == null)
             throw new IllegalArgumentException("Tipo da ação de resposta deve ser informado.");
