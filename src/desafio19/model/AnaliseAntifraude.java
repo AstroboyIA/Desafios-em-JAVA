@@ -1,8 +1,5 @@
 package desafio19.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import desafio19.model.enums.NivelFraude;
 import desafio19.model.enums.StatusAutorizacao;
 

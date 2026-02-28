@@ -33,20 +33,16 @@ public class ContaCartao {
             throw new IllegalArgumentException("O saldo utilizado não pode ser maior que o limite da conta!");
         }
 
+        if (perfilRisco == null) {
+            throw new IllegalArgumentException("O perfil de risco precisa ser informado!");
+        }
+
         this.numero = numero;
         this.perfilRisco = perfilRisco;
         this.limite = limite;
         this.saldoUtilizado = saldoUtilizado;
         this.bloqueado = bloqueado;
         this.tentativasSuspeitas = tentativasSuspeitas;
-    }
-
-    public void setTentativasSuspeitas(int tentativasSuspeitas) {
-        this.tentativasSuspeitas = tentativasSuspeitas;
-    }
-
-    public void setBloqueado(boolean bloqueado) {
-        this.bloqueado = bloqueado;
     }
 
     public String getNumero() {
@@ -65,8 +61,16 @@ public class ContaCartao {
         return bloqueado;
     }
 
+    private void bloquear(){
+        this.bloqueado = true;
+    }
+
     public int getTentativasSuspeitas() {
         return tentativasSuspeitas;
+    }
+
+    public PerfilRiscoCliente getPerfilRisco() {
+        return perfilRisco;
     }
 
     private final List<AnaliseAntifraude> historicoAnalises = new ArrayList<>();
@@ -77,4 +81,20 @@ public class ContaCartao {
 
     }
 
+    private void bloquearInternamente() {
+        this.bloqueado = true;
+    }
+
+    public void regitrarTentativas() {
+        
+        tentativasSuspeitas ++;
+
+        if (tentativasSuspeitas >= 3) {
+            bloquearInternamente();
+        }
+    }
+
+    public void bloquearFraude() {
+        bloquearInternamente();
+    }
 }

@@ -19,7 +19,7 @@ public class TransacaoFinanceira {
     public TransacaoFinanceira(String id, double valor, CategoriaTransacao categoria, CanalTransacao canal,
             int minutoDia, ContaCartao conta) {
 
-        if (id == null || id == "") {
+        if (id == null || id.isEmpty()) {
             throw new IllegalArgumentException("ID da transação não pode ser nulo.");
         }
 
@@ -36,12 +36,13 @@ public class TransacaoFinanceira {
         }
 
         if (minutoDia < 0 || minutoDia >= 1440) {
-            throw new IllegalArgumentException("Minuto do dia deve estar entre 0 e 1439.");
+            throw new IllegalArgumentException("Minuto do dia deve estar entre 0 e 1440.");
         }
 
         if (conta == null) {
             throw new IllegalArgumentException("Conta associada à transação não pode ser nula.");
         }
+
         this.id = id;
         this.valor = valor;
         this.categoria = categoria;
@@ -77,12 +78,17 @@ public class TransacaoFinanceira {
     public int calcularScoreAntifraude() {
 
         int scoreAntifraude = 0;
-        PerfilRiscoCliente perfilRisco;
 
-        scoreAntifraude = (valor / 100) + categoria.getPesoRisco() + canal.getPesoRiscoCanal();
+        int score = (int) (valor / 100);
+        int riscoCategoria = categoria.getPesoRisco();
+        int riscoCanal = canal.getPesoRiscoCanal();
+        int multiplicador = conta.getPerfilRisco().getMultiplicadorRisco();
 
-        if (minutoDia > 0 && minutoDia < 300) {
-            scoreAntifraude *= perfilRisco.getMultiplicadorRisco();
+        scoreAntifraude = score + riscoCategoria + riscoCanal;
+        scoreAntifraude *= multiplicador;
+
+        if (minutoDia >= 0 && minutoDia <= 300) {
+            scoreAntifraude += 5;
         }
 
         if (scoreAntifraude < 0) {
@@ -100,9 +106,9 @@ public class TransacaoFinanceira {
 
         if (score < 20) {
             return NivelFraude.NORMAL;
-        } else if (score > 19 || score < 40) {
+        } else if (score < 40) {
             return NivelFraude.SUSPEITA;
-        } else if (score > 39 || score < 70) {
+        } else if (score < 70) {
             return NivelFraude.ALTO_RISCO;
         } else {
             return NivelFraude.FRAUDE_CONFIRMADA;
@@ -111,32 +117,40 @@ public class TransacaoFinanceira {
 
     public StatusAutorizacao autorizar() {
 
-        int tentativasSuspeitas = 0;
+        if (conta.isBloqueado()) {
+            return StatusAutorizacao.BLOQUEADA;
+        }
+
+        int score = calcularScoreAntifraude();
+        NivelFraude nivel = classificarFraude();
         StatusAutorizacao status;
 
-        if (conta.isBloqueado()) {
-            status = StatusAutorizacao.BLOQUEADA;
-        } else if (valor > conta.getLimite()) {
+        if (valor > conta.getLimite()) {
             status = StatusAutorizacao.NEGADA;
-        } else if (classificarFraude() == NivelFraude.FRAUDE_CONFIRMADA) {
-            conta.setBloqueado(true);
+
+        } else if (nivel == NivelFraude.FRAUDE_CONFIRMADA) {
             status = StatusAutorizacao.BLOQUEADA;
-        } else if (classificarFraude() == NivelFraude.ALTO_RISCO) {
-            tentativasSuspeitas = 1;
-            conta.setTentativasSuspeitas(tentativasSuspeitas);
+            conta.bloquearFraude();
+
+        } else if (nivel == NivelFraude.ALTO_RISCO) {
             status = StatusAutorizacao.NEGADA;
-        } else if (classificarFraude() == NivelFraude.SUSPEITA) {
-            tentativasSuspeitas = 1;
-            conta.setTentativasSuspeitas(tentativasSuspeitas);
+            conta.regitrarTentativas();
+
+        } else if (nivel == NivelFraude.SUSPEITA) {
             status = StatusAutorizacao.APROVADA;
+            conta.regitrarTentativas();
+
         } else {
             status = StatusAutorizacao.APROVADA;
         }
 
-        if (tentativasSuspeitas >= 3) {
+        if (conta.isBloqueado()) {
             status = StatusAutorizacao.BLOQUEADA;
-            conta.setBloqueado(true);
         }
+
+        AnaliseAntifraude analise = new AnaliseAntifraude(score, nivel, status, valor);
+
+        conta.adicionarAnalise(analise);
 
         return status;
     }
@@ -161,6 +175,7 @@ public class TransacaoFinanceira {
     public CriticidadeConta classificarCriticidade() {
 
         CriticidadeConta criticidade;
+
         if (conta.isBloqueado()) {
             criticidade = CriticidadeConta.BLOQUEADA;
         } else if (classificarFraude() == NivelFraude.FRAUDE_CONFIRMADA || calcularIndiceExposicao() >= 90) {

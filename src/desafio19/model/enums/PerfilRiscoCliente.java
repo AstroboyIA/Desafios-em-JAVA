@@ -4,7 +4,7 @@ public enum PerfilRiscoCliente {
     
     BAIXO(1),
     MODERADO(2),
-    ALTO(5);
+    ALTO(3);
 
     private int multiplicadorRisco;
 
