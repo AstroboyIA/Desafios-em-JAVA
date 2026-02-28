@@ -1,6 +1,6 @@
-package main.desafio03.poo;
+package desafio03.poo;
 
-import main.desafio03.poo.heranca.Pessoa;
+import desafio03.poo.heranca.Pessoa;
 
 public class Aluno extends Pessoa {
     private double nota;

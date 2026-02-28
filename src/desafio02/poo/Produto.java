@@ -1,4 +1,4 @@
-package main.desafio02.poo;
+package desafio02.poo;
 
 public class Produto {
 

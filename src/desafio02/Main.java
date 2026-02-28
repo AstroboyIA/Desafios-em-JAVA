@@ -1,9 +1,9 @@
-package main.desafio02;
+package desafio02;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import main.desafio02.poo.Produto;
+import desafio02.poo.Produto;
 
 public class Main {
     public static void main(String[] args) {

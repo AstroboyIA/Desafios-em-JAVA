@@ -1,6 +1,6 @@
-package main.desafio04.poo;
+package desafio04.poo;
 
-import main.desafio04.poo.heranca.Produto;
+import desafio04.poo.heranca.Produto;
 
 public class ProdutoDigital extends Produto {
     private String linkDownload;

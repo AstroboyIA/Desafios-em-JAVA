@@ -1,11 +1,11 @@
-package main.desafio03;
+package desafio03;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import main.desafio03.poo.Aluno;
-import main.desafio03.poo.Professor;
-import main.desafio03.poo.heranca.Pessoa;
+import desafio03.poo.Aluno;
+import desafio03.poo.Professor;
+import desafio03.poo.heranca.Pessoa;
 
 public class Main {
     public static void main(String[] args) {

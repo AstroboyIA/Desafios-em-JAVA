@@ -1,6 +1,6 @@
-package main.desafio04v2.poo;
+package desafio04v2.poo;
 
-import main.desafio04v2.poo.heranca.Paciente;
+import desafio04v2.poo.heranca.Paciente;
 
 public class PacienteVip extends Paciente {
     protected String beneficioExtra;

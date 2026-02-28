@@ -1,4 +1,4 @@
-package main.desafio04v2.poo.heranca;
+package desafio04v2.poo.heranca;
 
 public class Paciente{
     private String nome;

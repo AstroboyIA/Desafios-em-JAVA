@@ -1,14 +1,14 @@
-package main.desafio04v2;
+package desafio04v2;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import main.desafio04v2.poo.Consulta;
-import main.desafio04v2.poo.Exame;
-import main.desafio04v2.poo.PacienteVip;
-import main.desafio04v2.poo.heranca.Paciente;
-import main.desafio04v2.poo.interfaces.Atendimento;
+import desafio04v2.poo.Consulta;
+import desafio04v2.poo.Exame;
+import desafio04v2.poo.PacienteVip;
+import desafio04v2.poo.heranca.Paciente;
+import desafio04v2.poo.interfaces.Atendimento;
 
 public class Main {
     public static void main(String[] args) {

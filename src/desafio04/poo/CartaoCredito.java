@@ -1,6 +1,6 @@
-package main.desafio04.poo;
+package desafio04.poo;
 
-import main.desafio04.poo.Interfaces.Pagamento;
+import desafio04.poo.Interfaces.Pagamento;
 
 public class CartaoCredito implements Pagamento {
     @Override

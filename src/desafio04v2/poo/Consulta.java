@@ -1,6 +1,6 @@
-package main.desafio04v2.poo;
+package desafio04v2.poo;
 
-import main.desafio04v2.poo.interfaces.Atendimento;
+import desafio04v2.poo.interfaces.Atendimento;
 
 public class Consulta  implements Atendimento {
     @Override

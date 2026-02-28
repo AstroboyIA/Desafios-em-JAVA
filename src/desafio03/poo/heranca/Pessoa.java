@@ -1,4 +1,4 @@
-package main.desafio03.poo.heranca;
+package desafio03.poo.heranca;
 
 public class Pessoa {
     private String nome;

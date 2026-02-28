@@ -1,4 +1,4 @@
-package main.desafio04.poo.heranca;
+package desafio04.poo.heranca;
 
 public class Produto {
 
