@@ -1,16 +1,3 @@
-Aqui você vai trabalhar com:
-
-* Autorização financeira
-* Antifraude baseado em múltiplos critérios
-* Score dinâmico
-* Estados derivados
-* Penalidade por reincidência
-* Bloqueio automático
-* Enum com comportamento
-* Regras cumulativas e condicionais
-* Imutabilidade parcial
-
-Este já é nível próximo de sistema bancário real.
 
 ---
 
@@ -370,5 +357,3 @@ Se você concluir esse com 100%, o próximo nível será:
 🔥 Rate limiting e janela temporal
 🔥 Agregador estatístico de fraude
 🔥 Sistema distribuído simplificado
-
-Quando começar, posso revisar sua arquitetura antes da implementação.

@@ -1,5 +1,95 @@
 package desafio19.service;
 
+import java.util.Scanner;
+
+import desafio19.model.enums.CanalTransacao;
+import desafio19.model.enums.CategoriaTransacao;
+
 public class TransacaoService {
-    
+
+    public void boasVindas() {
+        System.out.println("Boas vindas ao Sistema de autorização de transações financeiras!");
+    }
+
+    public void criarTransacaoFinanceira(Scanner sc) {
+
+        CategoriaTransacao categoriaTransacao;
+        CanalTransacao canal;
+        byte tipoTransacao;
+        byte tipoCanal;
+
+        System.out.println("Para continuar informe os dados necessarios para a verificação da transação:");
+
+        System.out.println("Qual o ID da transação?:");
+        sc.nextLine();
+        System.out.println("Qual será o valor da transação?:");
+        sc.nextDouble();
+        sc.nextLine();
+        System.out.println("Selecione o tipo de transação?:");
+        System.out.println("1 - Alimentação");
+        System.out.println("2 - Eletrônicos");
+        System.out.println("3 - Jóias");
+        System.out.println("4 - Serviços");
+        System.out.println("5 - Internacional");
+        tipoTransacao = sc.nextByte();
+        sc.nextLine();
+
+        switch (tipoTransacao) {
+
+            case 1:
+                categoriaTransacao = CategoriaTransacao.ALIMENTACAO;
+                break;
+
+            case 2:
+                categoriaTransacao = CategoriaTransacao.ELETRONICOS;
+                break;
+
+            case 3:
+                categoriaTransacao = CategoriaTransacao.JOIAS;
+                break;
+
+            case 4:
+                categoriaTransacao = CategoriaTransacao.SERVICOS;
+                break;
+
+            case 5:
+                categoriaTransacao = CategoriaTransacao.INTERNACIONAL;
+                break;
+
+            default:
+                System.out.println("Opção inválida!");
+                break;
+        }
+
+        System.out.println("Como essa transação será feita?:");
+        System.out.println("1 - Presencial");
+        System.out.println("2 - Online");
+        System.out.println("3 - APP");
+        System.out.println("4 - Internacional Online");
+        tipoCanal = sc.nextByte();
+        sc.nextLine();
+
+        switch (tipoCanal) {
+
+            case 1:
+                canal = CanalTransacao.PRESENCIAL;
+                break;
+
+            case 2:
+                canal = CanalTransacao.ONLINE;
+                break;
+
+            case 3:
+                canal = CanalTransacao.APP;
+                break;
+
+            case 4:
+                canal = CanalTransacao.INTERNACIONAL_ONLINE;
+                break;
+
+            default:
+                System.out.println("Opção inválida!");
+                break;
+        }
+    }
 }
