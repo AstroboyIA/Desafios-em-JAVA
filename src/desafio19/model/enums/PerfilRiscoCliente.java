@@ -16,4 +16,12 @@ public enum PerfilRiscoCliente {
         this.multiplicadorRisco = multiplicadorRisco;
     }
 
+    public static PerfilRiscoCliente fromOpcao(int opcao) {
+        return switch (opcao) {
+            case 1 -> BAIXO;
+            case 2 -> MODERADO;
+            case 3 -> ALTO;
+            default -> throw new IllegalArgumentException("Opção inválida!");
+        };
+    }
 }

@@ -16,4 +16,14 @@ public enum CanalTransacao {
     public int getPesoRiscoCanal() {
         return pesoRiscoCanal;
     }
+
+    public static CanalTransacao fromOpcao(int opcao) {
+        return switch (opcao) {
+            case 1 -> PRESENCIAL;
+            case 2 -> ONLINE;
+            case 3 -> APP;
+            case 4 -> INTERNACIONAL_ONLINE;
+            default -> throw new IllegalArgumentException("Opção inválida!");
+        };
+    }
 }
