@@ -341,19 +341,3 @@ Criticidade da conta: BLOQUEADA
 * Cálculo financeiro proporcional
 
 ---
-
-# 📊 Nível de Complexidade
-
-Desafio 18 → Regras operacionais
-Desafio 19 → Motor antifraude realista
-
-Este já se aproxima de backend bancário simplificado.
-
----
-
-Se você concluir esse com 100%, o próximo nível será:
-
-🔥 Simulação concorrente com múltiplas transações simultâneas
-🔥 Rate limiting e janela temporal
-🔥 Agregador estatístico de fraude
-🔥 Sistema distribuído simplificado

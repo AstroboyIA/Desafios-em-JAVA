@@ -1,14 +1,46 @@
-package desafio19.service;
-
-import java.util.Scanner;
-
-import desafio19.model.enums.CanalTransacao;
-import desafio19.model.enums.CategoriaTransacao;
-
-public class TransacaoService {
-
-    public void boasVindas() {
+public void boasVindas() {
         System.out.println("Boas vindas ao Sistema de autorização de transações financeiras!");
+    }
+
+    public void criarContaCartao(Scanner sc) {
+
+        String numeroConta;
+        byte escolhaPerfil;
+        PerfilRiscoCliente perfil;
+        double limiteConta;
+
+        System.out.println("Para criar uma conta, informe os dados abaixo:");
+
+        System.out.println("Qual o número da conta?:");
+        numeroConta = sc.nextLine();
+        System.out.println("Qual o perfil de risco dessa conta?:");
+        System.out.println("1 - BAIXO");
+        System.out.println("2 - MODERADO");
+        System.out.println("3 - ALTO");
+        escolhaPerfil = sc.nextByte();
+
+        switch (escolhaPerfil) {
+            case 1:
+                perfil = PerfilRiscoCliente.BAIXO;
+                break;
+
+            case 2:
+                perfil = PerfilRiscoCliente.MODERADO;
+                break;
+
+            case 3:
+                perfil = PerfilRiscoCliente.ALTO;
+                break;
+
+            default:
+                System.out.println("Opção inválida!");
+                break;
+        }
+
+        System.out.println("Qual o limite da conta?:");
+        limiteConta = sc.nextDouble();
+        sc.nextLine();
+        
     }
 
     public void criarTransacaoFinanceira(Scanner sc) {
@@ -17,6 +49,7 @@ public class TransacaoService {
         CanalTransacao canal;
         byte tipoTransacao;
         byte tipoCanal;
+        int minutosTransacao;
 
         System.out.println("Para continuar informe os dados necessarios para a verificação da transação:");
 
@@ -91,5 +124,9 @@ public class TransacaoService {
                 System.out.println("Opção inválida!");
                 break;
         }
+
+        System.out.println("Em que momento do dia essa transação será feita?:");
+        minutosTransacao = sc.nextInt();
+        sc.nextLine();
+
     }
-}
