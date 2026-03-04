@@ -27,14 +27,14 @@ public class AutorizacaoService {
 
             int score = transacao.calcularScoreAntifraude();
             NivelFraude nivel = transacao.classificarFraude();
-            StatusAutorizacao status = transacao.autorizar()
+            StatusAutorizacao status = conta.autorizarTransacao(transacao, conta);
 
         return new ResultadoAutorizacaoDTO(
             status,
             nivel,
             score,
-            conta.obterCriticidade(),
-            conta.calcularIndiceExposicao()
+            transacao.classificarCriticidade(),
+            transacao.calcularIndiceExposicao()
         );
     }
 }

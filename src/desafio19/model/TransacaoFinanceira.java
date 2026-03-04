@@ -115,53 +115,12 @@ public class TransacaoFinanceira {
         }
     }
 
-    public StatusAutorizacao autorizar() {
-
-        if (conta.isBloqueado()) {
-            return StatusAutorizacao.BLOQUEADA;
-        }
-
-        int score = calcularScoreAntifraude();
-        NivelFraude nivel = classificarFraude();
-        StatusAutorizacao status;
-
-        if (valor > conta.getLimite()) {
-            status = StatusAutorizacao.NEGADA;
-
-        } else if (nivel == NivelFraude.FRAUDE_CONFIRMADA) {
-            status = StatusAutorizacao.BLOQUEADA;
-            conta.bloquearFraude();
-
-        } else if (nivel == NivelFraude.ALTO_RISCO) {
-            status = StatusAutorizacao.NEGADA;
-            conta.regitrarTentativas();
-
-        } else if (nivel == NivelFraude.SUSPEITA) {
-            status = StatusAutorizacao.APROVADA;
-            conta.regitrarTentativas();
-
-        } else {
-            status = StatusAutorizacao.APROVADA;
-        }
-
-        if (conta.isBloqueado()) {
-            status = StatusAutorizacao.BLOQUEADA;
-        }
-
-        AnaliseAntifraude analise = new AnaliseAntifraude(score, nivel, status, valor);
-
-        conta.adicionarAnalise(analise);
-
-        return status;
-    }
-
     public double calcularIndiceExposicao() {
 
         double indice;
-        double saldoUtilizado = conta.getSaldoUtilizado();
         double limite = conta.getLimite();
 
-        indice = saldoUtilizado / limite * 100;
+        indice = conta.getSaldoUtilizado() / limite * 100;
 
         if (indice > 100) {
             indice = 100;

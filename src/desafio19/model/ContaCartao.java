@@ -3,7 +3,9 @@ package desafio19.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import desafio19.model.enums.NivelFraude;
 import desafio19.model.enums.PerfilRiscoCliente;
+import desafio19.model.enums.StatusAutorizacao;
 
 public class ContaCartao {
 
@@ -14,8 +16,7 @@ public class ContaCartao {
     private boolean bloqueado;
     private int tentativasSuspeitas;
 
-    public ContaCartao(String numero, PerfilRiscoCliente perfilRisco, double limite, double saldoUtilizado,
-            boolean bloqueado, int tentativasSuspeitas) {
+    public ContaCartao(String numero, PerfilRiscoCliente perfilRisco, double limite) {
 
         if (numero == null) {
             throw new IllegalArgumentException("O número precisa ser informado!");
@@ -25,14 +26,6 @@ public class ContaCartao {
             throw new IllegalArgumentException("O limite precisa ser positivo!");
         }
 
-        if (saldoUtilizado < 0) {
-            throw new IllegalArgumentException("O saldo utilizado não pode ser negativo!");
-        }
-
-        if (saldoUtilizado > limite) {
-            throw new IllegalArgumentException("O saldo utilizado não pode ser maior que o limite da conta!");
-        }
-
         if (perfilRisco == null) {
             throw new IllegalArgumentException("O perfil de risco precisa ser informado!");
         }
@@ -40,9 +33,10 @@ public class ContaCartao {
         this.numero = numero;
         this.perfilRisco = perfilRisco;
         this.limite = limite;
-        this.saldoUtilizado = saldoUtilizado;
-        this.bloqueado = bloqueado;
-        this.tentativasSuspeitas = tentativasSuspeitas;
+
+        this.saldoUtilizado = 0;
+        this.bloqueado = false;
+        this.tentativasSuspeitas = 0;
     }
 
     public String getNumero() {
@@ -81,20 +75,61 @@ public class ContaCartao {
 
     }
 
-    private void bloquearInternamente() {
-        this.bloqueado = true;
-    }
-
     public void regitrarTentativas() {
-        
+
         tentativasSuspeitas ++;
 
         if (tentativasSuspeitas >= 3) {
-            bloquearInternamente();
+            bloquear();
         }
     }
 
     public void bloquearFraude() {
-        bloquearInternamente();
+        bloquear();
+    }
+
+    public StatusAutorizacao autorizarTransacao(TransacaoFinanceira transacao, ContaCartao conta) {
+
+        if (conta.isBloqueado()) {
+            return StatusAutorizacao.BLOQUEADA;
+        }
+
+        int score = transacao.calcularScoreAntifraude();
+        NivelFraude nivel = transacao.classificarFraude();
+        StatusAutorizacao status;
+        double novoSaldoUtilizado = conta.getSaldoUtilizado() + transacao.getValor();
+
+        if (novoSaldoUtilizado > conta.getLimite()) {
+            status = StatusAutorizacao.NEGADA;
+
+        } else if (nivel == NivelFraude.FRAUDE_CONFIRMADA) {
+            status = StatusAutorizacao.BLOQUEADA;
+            conta.bloquearFraude();
+
+        } else if (nivel == NivelFraude.ALTO_RISCO) {
+            status = StatusAutorizacao.NEGADA;
+            conta.regitrarTentativas();
+
+        } else if (nivel == NivelFraude.SUSPEITA) {
+            status = StatusAutorizacao.APROVADA;
+            conta.regitrarTentativas();
+
+        } else {
+            status = StatusAutorizacao.APROVADA;
+        }
+
+        if (conta.isBloqueado()) {
+            status = StatusAutorizacao.BLOQUEADA;
+        }
+
+        if (status == StatusAutorizacao.APROVADA) {
+            conta.saldoUtilizado = novoSaldoUtilizado;
+        }
+
+        AnaliseAntifraude analise = new AnaliseAntifraude(score, nivel, status, transacao.getValor());
+
+        conta.adicionarAnalise(analise);
+
+        return status;
     }
 }
