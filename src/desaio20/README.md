@@ -1,30 +1,77 @@
 
 ---
 
-# 🛒 DESAFIO 20 — Sistema de Gestão de Estoque com Notificações e Estratégias de Precificação
+# 🛒 DESAFIO 20 — Sistema de Gestão de Estoque (Arquitetura Spring-Style)
 
 ---
 
 # 🎯 Objetivo
 
-Construir um sistema orientado a objetos capaz de:
+Construir um sistema de e-commerce com **arquitetura em camadas**, simulando os padrões do Spring Boot em Java puro:
 
-* Gerenciar estoque de produtos com tipos variados usando **Generics**
-* Aplicar diferentes estratégias de precificação usando **Strategy**
-* Notificar interessados sobre eventos de estoque usando **Observer**
-* Modelar comportamentos distintos por tipo de produto usando **Interfaces + Polimorfismo**
+* Camadas separadas: **Service**, **Repository**, **Domain**
+* **DTOs** de entrada e saída desacoplados do domínio
+* **Injeção de dependência via construtor** (sem `new` dentro de classes)
+* **Eventos e Listeners** desacoplados (Observer)
+* **Generics**, **Strategy** e **Polimorfismo**
 
-Nenhuma regra no `Main`.
+Nenhuma regra no `Main`. O `Main` apenas monta as dependências e chama o serviço.
 
 ---
 
-# 🏗️ MODELO DE DOMÍNIO
+# 🏗️ ESTRUTURA DE PACOTES
+
+```
+src/
+├── domain/
+│   ├── Produto.java
+│   ├── DadosAdicionais.java        ← interface
+│   ├── DadosFisicos.java
+│   ├── DadosDigitais.java
+│   ├── DadosPerecivel.java
+│   ├── EventoEstoque.java
+│   └── enums/
+│       ├── CategoriaEstoque.java
+│       └── TipoEvento.java
+│
+├── dto/
+│   ├── CadastrarProdutoRequest.java
+│   ├── MovimentacaoRequest.java
+│   ├── ProdutoResponse.java
+│   └── RelatorioEstoqueResponse.java
+│
+├── repository/
+│   ├── ProdutoRepository.java      ← interface
+│   └── ProdutoRepositoryEmMemoria.java
+│
+├── service/
+│   ├── EstoqueService.java
+│   └── PrecificacaoService.java
+│
+├── pricing/
+│   ├── Precificavel.java           ← interface (Strategy)
+│   ├── PrecoNormal.java
+│   ├── PrecoComDesconto.java
+│   ├── PrecoComMarkup.java
+│   └── PrecoDinamico.java
+│
+└── listener/
+    ├── EventoListener.java         ← interface (Observer)
+    ├── LogListener.java
+    ├── AlertaReposicaoListener.java
+    └── RelatorioEventosListener.java
+```
+
+> 💡 **Por que isso importa no Spring?**
+> O Spring organiza o código exatamente assim. `@Repository`, `@Service`, e `@Component` são anotações que marcam classes nessas camadas. Aqui você faz o mesmo — sem anotação, mas com a mesma responsabilidade.
+
+---
+
+# 🏗️ DOMÍNIO
 
 ---
 
 ## 📌 Produto\<T extends DadosAdicionais\>
-
-Classe genérica que representa qualquer produto do catálogo.
 
 ```java
 private final String id;
@@ -58,15 +105,13 @@ public interface DadosAdicionais {
 Implementações obrigatórias:
 
 ### DadosFisicos
-
 ```java
 private final double pesoKg;
-private final String dimensoesCm; // ex: "30x20x10"
+private final String dimensoesCm;
 private final boolean requerRefrigeracao;
 ```
 
 ### DadosDigitais
-
 ```java
 private final String urlDownload;
 private final double tamanhoMb;
@@ -74,32 +119,12 @@ private final String plataforma;
 ```
 
 ### DadosPerecivel
-
 ```java
 private final LocalDate dataValidade;
 private final String loteRastreamento;
 ```
 
----
-
-## 📌 Interface Precificavel
-
-```java
-public interface Precificavel {
-    double calcularPrecoFinal(double precoBase);
-    String descricaoEstrategia();
-}
-```
-
----
-
-## 📌 Interface Observador
-
-```java
-public interface Observador {
-    void notificar(EventoEstoque evento);
-}
-```
+Cada uma implementa `resumo()` retornando uma string descritiva.
 
 ---
 
@@ -116,49 +141,11 @@ private final LocalDateTime momento;
 
 Imutável. Sem setters.
 
----
-
-## 📌 GerenciadorEstoque
-
-Classe central do sistema.
-
-```java
-private final Map<String, Produto<?>> catalogo;
-private final List<Observador> observadores;
-private Precificavel estrategiaPrecificacao;
-```
-
-### Comportamentos
-
-```java
-public <T extends DadosAdicionais> void cadastrarProduto(Produto<T> produto);
-public void entradaEstoque(String idProduto, int quantidade);
-public void saidaEstoque(String idProduto, int quantidade);
-public void alterarEstrategia(Precificavel novaEstrategia);
-public void registrarObservador(Observador observador);
-public void removerObservador(Observador observador);
-public double consultarPreco(String idProduto);
-public RelatorioEstoque gerarRelatorio();
-```
+> 💡 **Equivalente Spring:** `ApplicationEvent`. No Spring, eventos são publicados via `ApplicationEventPublisher` e consumidos por `@EventListener`. Aqui você simula esse mecanismo manualmente.
 
 ---
 
-## 📌 RelatorioEstoque
-
-```java
-private final int totalProdutos;
-private final int produtosAbaixoDoMinimo;
-private final int produtosSemEstoque;
-private final double valorTotalEmEstoque;
-private final Map<CategoriaEstoque, Integer> quantidadePorCategoria;
-private final List<String> alertasValidade; // apenas DadosPerecivel vencendo em 7 dias
-```
-
-Imutável. **Builder obrigatório.**
-
----
-
-# 📊 ENUMS OBRIGATÓRIOS
+# 📊 ENUMS
 
 ---
 
@@ -176,13 +163,7 @@ public enum CategoriaEstoque {
 }
 ```
 
-Exemplo de mínimos:
-
-* ELETRONICO → 5
-* ALIMENTICIO → 20
-* VESTUARIO → 10
-* DIGITAL → 0 (estoque ilimitado)
-* PERECIVEL → 15
+Mínimos sugeridos: ELETRONICO → 5, ALIMENTICIO → 20, VESTUARIO → 10, DIGITAL → 0, PERECIVEL → 15.
 
 ---
 
@@ -203,77 +184,165 @@ public enum TipoEvento {
 
 ---
 
-# 🧠 ESTRATÉGIAS DE PRECIFICAÇÃO (Strategy)
+# 📦 DTOs
 
-Cada uma implementa `Precificavel`:
-
----
-
-## PrecoNormal
-
-Retorna o precoBase sem alteração.
+> 💡 **Por que DTOs?**
+> No Spring, nunca se expõe a entidade de domínio diretamente na API. O DTO é o contrato público — o domínio é protegido. Aqui você pratica essa separação.
 
 ---
 
-## PrecoComDesconto
+## CadastrarProdutoRequest
 
 ```java
-private final double percentualDesconto; // 0.0 a 1.0
+private final String nome;
+private final CategoriaEstoque categoria;
+private final double precoBase;
+private final int quantidadeInicial;
+private final DadosAdicionais dadosAdicionais;
 ```
 
-```
-precoFinal = precoBase * (1 - percentualDesconto)
-```
-
-Invariante: percentual entre 0 e 1, senão `IllegalArgumentException`.
+> Entrada para cadastro. O `id` é gerado internamente pelo serviço, não vem do request.
 
 ---
 
-## PrecoComMarkup
+## MovimentacaoRequest
 
 ```java
-private final double percentualMarkup;
-```
-
-```
-precoFinal = precoBase * (1 + percentualMarkup)
+private final String idProduto;
+private final int quantidade;
+private final TipoMovimentacao tipo; // ENTRADA ou SAIDA
 ```
 
 ---
 
-## PrecoDinamico
+## ProdutoResponse
 
 ```java
-private final int estoqueAlvo;
+private final String id;
+private final String nome;
+private final CategoriaEstoque categoria;
+private final double precoBase;
+private final double precoFinal;    // já com estratégia aplicada
+private final int quantidadeEmEstoque;
+private final String resumoDadosAdicionais;
+private final boolean abaixoDoMinimo;
 ```
 
-Se `quantidadeEmEstoque <= estoqueAlvo`:
-
-```
-precoFinal = precoBase * 1.30  // escassez → +30%
-```
-
-Senão:
-
-```
-precoFinal = precoBase * 0.90  // excesso → -10%
-```
-
-> **Atenção:** `PrecoDinamico` precisa consultar o estoque atual do produto. Pense em como modelar isso sem quebrar o encapsulamento.
+> Saída após qualquer operação. Nunca expõe o `Produto` diretamente.
 
 ---
 
-# 🧠 OBSERVADORES (Observer)
+## RelatorioEstoqueResponse
 
-Cada um implementa `Observador`:
+```java
+private final int totalProdutos;
+private final int produtosAbaixoDoMinimo;
+private final int produtosSemEstoque;
+private final double valorTotalEmEstoque;
+private final Map<CategoriaEstoque, Integer> quantidadePorCategoria;
+private final List<String> alertasValidade;
+```
+
+Imutável. **Builder obrigatório.**
+
+> 💡 **Equivalente Spring:** Classes anotadas com `@Builder` do Lombok, ou ResponseEntity com body. Aqui você implementa o Builder manualmente.
 
 ---
 
-## LogObservador
+# 🗄️ REPOSITORY
 
-Imprime no console uma linha formatada a cada evento recebido.
+> 💡 **Equivalente Spring:** `@Repository` + `JpaRepository<T, ID>`. O Spring injeta automaticamente a implementação. Aqui você faz a injeção via construtor manualmente.
 
-Exemplo:
+---
+
+## Interface ProdutoRepository
+
+```java
+public interface ProdutoRepository {
+    void salvar(Produto<?> produto);
+    Optional<Produto<?>> buscarPorId(String id);
+    List<Produto<?>> buscarTodos();
+    boolean existePorId(String id);
+    void atualizar(Produto<?> produto);
+}
+```
+
+---
+
+## ProdutoRepositoryEmMemoria
+
+Implementa `ProdutoRepository` usando um `Map<String, Produto<?>>` internamente.
+
+Nenhuma outra classe deve conhecer essa implementação — apenas a interface.
+
+---
+
+# ⚙️ SERVICES
+
+> 💡 **Equivalente Spring:** Classes anotadas com `@Service`. Recebem dependências via `@Autowired` no construtor. Aqui você injeta via construtor manualmente — é exatamente o que o Spring faz por baixo.
+
+---
+
+## PrecificacaoService
+
+Responsável exclusivamente por gerenciar e aplicar estratégias de precificação.
+
+```java
+// Injeção via construtor
+public PrecificacaoService(Precificavel estrategiaInicial) { ... }
+```
+
+```java
+public void alterarEstrategia(Precificavel novaEstrategia);
+public double calcularPreco(double precoBase);
+public String descricaoEstrategiaAtual();
+```
+
+---
+
+## EstoqueService
+
+Classe central. Recebe todas as dependências via construtor.
+
+```java
+// Injeção via construtor — simula @Autowired do Spring
+public EstoqueService(
+    ProdutoRepository repository,
+    PrecificacaoService precificacaoService,
+    List<EventoListener> listeners
+) { ... }
+```
+
+```java
+public ProdutoResponse cadastrarProduto(CadastrarProdutoRequest request);
+public ProdutoResponse movimentarEstoque(MovimentacaoRequest request);
+public ProdutoResponse consultarProduto(String idProduto);
+public RelatorioEstoqueResponse gerarRelatorio();
+```
+
+> Todas as operações retornam DTOs, nunca entidades de domínio.
+
+---
+
+# 🔔 LISTENERS (Observer)
+
+> 💡 **Equivalente Spring:** Métodos anotados com `@EventListener` ou classes que implementam `ApplicationListener<E>`. São registrados no contexto e chamados automaticamente quando um evento é publicado.
+
+---
+
+## Interface EventoListener
+
+```java
+public interface EventoListener {
+    void aoReceberEvento(EventoEstoque evento);
+}
+```
+
+---
+
+## LogListener
+
+Imprime no console cada evento recebido:
 
 ```
 [2025-06-01 14:32] ESTOQUE_ZERADO — Produto: Notebook Gamer (ID: P001) | Anterior: 1 | Atual: 0
@@ -281,15 +350,9 @@ Exemplo:
 
 ---
 
-## AlertaReposicaoObservador
+## AlertaReposicaoListener
 
-Só age nos eventos `ESTOQUE_MINIMO_ATINGIDO` e `ESTOQUE_ZERADO`.
-
-```java
-private final List<String> alertasGerados;
-```
-
-Registra internamente uma mensagem de alerta e disponibiliza via:
+Age apenas em `ESTOQUE_MINIMO_ATINGIDO` e `ESTOQUE_ZERADO`. Acumula alertas internamente.
 
 ```java
 public List<String> getAlertas(); // imutável
@@ -297,16 +360,57 @@ public List<String> getAlertas(); // imutável
 
 ---
 
-## RelatorioEventosObservador
+## RelatorioEventosListener
 
 Acumula todos os eventos recebidos.
 
 ```java
-private final List<EventoEstoque> eventos;
-
 public List<EventoEstoque> getEventos(); // imutável
 public long contarEventosPorTipo(TipoEvento tipo);
 ```
+
+---
+
+# 💲 ESTRATÉGIAS DE PRECIFICAÇÃO (Strategy)
+
+> 💡 **Equivalente Spring:** Beans de Strategy injetados condicionalmente com `@Qualifier` ou `@ConditionalOnProperty`. Aqui você troca a estratégia via `alterarEstrategia()`.
+
+---
+
+## Interface Precificavel
+
+```java
+public interface Precificavel {
+    double calcularPrecoFinal(double precoBase);
+    String descricaoEstrategia();
+}
+```
+
+Implementações obrigatórias:
+
+**PrecoNormal** — retorna `precoBase` sem alteração.
+
+**PrecoComDesconto**
+```java
+private final double percentualDesconto; // 0.0 a 1.0
+// precoFinal = precoBase * (1 - percentualDesconto)
+```
+
+**PrecoComMarkup**
+```java
+private final double percentualMarkup;
+// precoFinal = precoBase * (1 + percentualMarkup)
+```
+
+**PrecoDinamico**
+```java
+private final int estoqueAlvo;
+private final ProdutoRepository repository; // injetado via construtor
+// estoque <= alvo → precoBase * 1.30
+// estoque > alvo  → precoBase * 0.90
+```
+
+> `PrecoDinamico` recebe o `ProdutoRepository` via construtor para consultar o estoque — sem quebrar encapsulamento.
 
 ---
 
@@ -314,70 +418,108 @@ public long contarEventosPorTipo(TipoEvento tipo);
 
 ---
 
-## 🔹 Regra 1 — Entrada de Estoque
+## 🔹 Regra 1 — Cadastro de Produto
 
-1. Validar que `quantidade > 0`, senão `IllegalArgumentException`
-2. Validar que produto existe, senão `NoSuchElementException`
-3. Atualizar `quantidadeEmEstoque`
-4. Emitir evento `ENTRADA_ESTOQUE`
-
----
-
-## 🔹 Regra 2 — Saída de Estoque
-
-1. Validar que `quantidade > 0`
-2. Validar que produto existe
-3. Validar que há estoque suficiente, senão `IllegalStateException`
-4. Atualizar `quantidadeEmEstoque`
-5. Emitir `SAIDA_ESTOQUE`
-6. Se quantidade resultante == 0 → emitir também `ESTOQUE_ZERADO`
-7. Se quantidade resultante > 0 e <= mínimo da categoria → emitir também `ESTOQUE_MINIMO_ATINGIDO`
+1. Gerar `id` único internamente (ex: UUID ou sequencial)
+2. Criar `Produto` a partir do `CadastrarProdutoRequest`
+3. Salvar via `repository.salvar()`
+4. Publicar evento `PRODUTO_CADASTRADO`
+5. Retornar `ProdutoResponse` montado a partir do domínio
 
 ---
 
-## 🔹 Regra 3 — Notificação de Observadores
+## 🔹 Regra 2 — Movimentação de Estoque
 
-Ao emitir qualquer evento, o `GerenciadorEstoque` deve notificar **todos os observadores registrados** na ordem em que foram adicionados.
+**Entrada:**
+1. Validar `quantidade > 0`
+2. Buscar produto — não encontrado → `NoSuchElementException`
+3. Atualizar quantidade
+4. Publicar `ENTRADA_ESTOQUE`
+
+**Saída:**
+1. Validar `quantidade > 0`
+2. Buscar produto — não encontrado → `NoSuchElementException`
+3. Validar estoque suficiente — insuficiente → `IllegalStateException`
+4. Atualizar quantidade
+5. Publicar `SAIDA_ESTOQUE`
+6. Se zerou → publicar também `ESTOQUE_ZERADO`
+7. Se ficou abaixo do mínimo → publicar também `ESTOQUE_MINIMO_ATINGIDO`
+
+---
+
+## 🔹 Regra 3 — Publicação de Eventos
+
+O `EstoqueService` mantém a lista de `EventoListener` recebida no construtor.
+
+A cada evento gerado, notifica **todos os listeners na ordem em que foram registrados**.
 
 ---
 
 ## 🔹 Regra 4 — Consulta de Preço
 
-```java
-public double consultarPreco(String idProduto)
-```
-
-Aplica a estratégia de precificação **atualmente configurada** sobre o `precoBase` do produto.
-
-Produto não encontrado → `NoSuchElementException`.
+`consultarProduto()` usa `PrecificacaoService.calcularPreco()` para preencher `precoFinal` no `ProdutoResponse`.
 
 ---
 
-## 🔹 Regra 5 — Alerta de Validade
+## 🔹 Regra 5 — Alerta de Validade no Relatório
 
-Ao gerar o `RelatorioEstoque`, verificar todos os produtos com `DadosPerecivel`.
-
-Se `dataValidade` for nos próximos **7 dias** a partir de hoje → incluir no campo `alertasValidade` e emitir evento `VALIDADE_PROXIMA`.
+Ao gerar `RelatorioEstoqueResponse`, verificar produtos com `DadosPerecivel`. Se `dataValidade` estiver nos próximos **7 dias** → incluir em `alertasValidade` e publicar `VALIDADE_PROXIMA`.
 
 ---
 
 ## 🔹 Regra 6 — Valor Total em Estoque
 
 ```
-valorTotal = Σ (precoBase * quantidadeEmEstoque) para todos os produtos
+valorTotal = Σ (precoBase * quantidadeEmEstoque)
 ```
 
-Usar `precoBase`, não o preço com estratégia aplicada.
+Usar `precoBase`, não o preço com estratégia.
 
 ---
 
 # 🚫 Restrições
 
+❌ Nenhuma dependência criada com `new` dentro de `Service` — somente via construtor
+❌ Nenhuma entidade de domínio exposta fora da camada de serviço
 ❌ Não usar `instanceof` para desviar lógica — use polimorfismo
-❌ Não expor listas internas mutáveis
-❌ Não aplicar estratégia de precificação diretamente no `Produto`
-❌ `RelatorioEstoque` somente via Builder
+❌ `RelatorioEstoqueResponse` somente via Builder
+❌ `EstoqueService` não conhece implementações concretas de `Repository` nem de `Listener`
 ❌ Nenhuma regra de negócio no `Main`
+
+---
+
+# 📌 Exemplo de Main (montagem das dependências)
+
+```java
+public class Main {
+    public static void main(String[] args) {
+
+        // Repository (como um Bean Spring)
+        ProdutoRepository repository = new ProdutoRepositoryEmMemoria();
+
+        // Listeners (como @EventListener)
+        LogListener log = new LogListener();
+        AlertaReposicaoListener alerta = new AlertaReposicaoListener();
+        RelatorioEventosListener relatorioEventos = new RelatorioEventosListener();
+
+        // Estratégia inicial (como um @Bean de Strategy)
+        Precificavel estrategia = new PrecoNormal();
+        PrecificacaoService precificacao = new PrecificacaoService(estrategia);
+
+        // Service com injeção via construtor (como @Autowired)
+        EstoqueService service = new EstoqueService(
+            repository,
+            precificacao,
+            List.of(log, alerta, relatorioEventos)
+        );
+
+        // Uso
+        service.cadastrarProduto(...);
+        service.movimentarEstoque(...);
+        service.gerarRelatorio();
+    }
+}
+```
 
 ---
 
@@ -385,24 +527,21 @@ Usar `precoBase`, não o preço com estratégia aplicada.
 
 ```
 Cadastro: Notebook Gamer | ELETRONICO | R$3.000 | Qtd: 10
-Cadastro: Iogurte Natural | PERECIVEL | R$5 | Qtd: 2 | Validade: 3 dias
-Cadastro: Curso Java | DIGITAL | R$150 | Qtd: 999
-
-Observadores: LogObservador, AlertaReposicaoObservador
+  → [LOG] PRODUTO_CADASTRADO — Notebook Gamer
 
 Saída: Notebook Gamer x6
-  → SAIDA_ESTOQUE (10 → 4)
-  → ESTOQUE_MINIMO_ATINGIDO (mínimo ELETRONICO = 5)
-  → Alerta gerado: "Repor Notebook Gamer — abaixo do mínimo"
+  → [LOG] SAIDA_ESTOQUE (10 → 4)
+  → [LOG] ESTOQUE_MINIMO_ATINGIDO (mínimo ELETRONICO = 5)
+  → [ALERTA] Repor Notebook Gamer — abaixo do mínimo recomendado
 
-Estratégia alterada: PrecoComDesconto(0.15)
-Preço Notebook: R$2.550,00
+Estratégia alterada: PrecoComDesconto(15%)
+Consulta Notebook: precoBase R$3.000 → precoFinal R$2.550
 
 --- Relatório ---
-Total de produtos: 3
-Abaixo do mínimo: 1 (Notebook Gamer)
+Total: 3 produtos
+Abaixo do mínimo: 1
 Sem estoque: 0
-Valor total em estoque: R$31.985,00
+Valor total: R$31.985,00
 Alertas de validade: ["Iogurte Natural vence em 3 dias — Lote: L2024A"]
 ```
 
@@ -410,20 +549,23 @@ Alertas de validade: ["Iogurte Natural vence em 3 dias — Lote: L2024A"]
 
 # 🧠 O que este desafio testa
 
-* **Generics** — `Produto<T>` com bound `T extends DadosAdicionais`
-* **Interfaces + Polimorfismo** — `DadosAdicionais`, `Precificavel`, `Observador` com múltiplas implementações
-* **Strategy** — troca de estratégia de precificação em tempo de execução
-* **Observer** — notificação desacoplada de múltiplos interessados
-* **Builder** — construção controlada de `RelatorioEstoque`
-* **Encapsulamento** — listas imutáveis, invariantes rigorosas
-* **Modelagem de domínio** — tipos heterogêneos com comportamento coeso
+| Conceito Java | Equivalente Spring praticado |
+|---|---|
+| Interface + Polimorfismo | `@Repository`, `@Service` com contrato via interface |
+| Injeção via construtor | `@Autowired` no construtor |
+| Observer / Listener | `@EventListener` / `ApplicationEvent` |
+| Strategy | `@Bean` com `@Qualifier` |
+| Generics | Repositórios genéricos do Spring Data |
+| DTOs | Request/Response bodies da API REST |
+| Builder | Construção de respostas complexas |
+| Separação de camadas | Arquitetura padrão Spring Boot |
 
 ---
 
 # 📊 Nível de Complexidade
 
-| Desafio | Foco principal |
-|---------|----------------|
+| Desafio | Foco |
+|---------|------|
 | 19 | Motor antifraude + enums com comportamento |
-| **20** | **Generics + Strategy + Observer + Polimorfismo** |
-| 21 | A definir com você 🚀 |
+| **20** | **Arquitetura Spring-style + Generics + Strategy + Observer** |
+| 21 | A definir 🚀 |
