@@ -1,5 +1,7 @@
 package desaio20.src.domain;
 
+import java.util.UUID;
+
 import desaio20.src.domain.enums.CategoriaEstoque;
 
 public class Produto <T extends DadosAdicionais> {
@@ -33,8 +35,13 @@ public class Produto <T extends DadosAdicionais> {
         this.nome = nome;
         this.precoBase = precoBase;
         this.quantidadeEmEstoque = quantidadeEmEstoque;
+        this.categoria = null; // corrigir depois
         this.dadosAdicionais = dadosAdicionais;
 
     }
+        public int getQuantidadeEmEstoque() {
+        return quantidadeEmEstoque;
+    }
+
     
 }

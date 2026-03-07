@@ -4,6 +4,9 @@ import java.util.Map;
 
 import desaio20.src.domain.Produto;
 
-public interface ProdutosRepositoryEmMemoria {
-    //Map<String, Produto<?>>
+public class ProdutosRepositoryEmMemoria implements ProdutoRepository {
+    
+    public Map<String, Produto<?>>(){
+        return null;
+    }
 }

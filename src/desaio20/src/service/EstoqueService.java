@@ -6,11 +6,20 @@ import desaio20.src.dto.CadastrarProdutoRequest;
 import desaio20.src.dto.MovimentacaoRequest;
 import desaio20.src.dto.ProdutoResponse;
 import desaio20.src.dto.RelatorioEstoqueResponse;
+import desaio20.src.listener.EventoListener;
 import desaio20.src.repository.ProdutoRepository;
 
 public class EstoqueService {
     
-    public EstoqueService(ProdutoRepository repository, PrecificacaoService precificacaoService, List<EventoListener> listeners) {}
+    private ProdutoRepository repository;
+    private PrecificacaoService precificacaoService;
+    private List<EventoListener> listeners;
+
+    public EstoqueService(ProdutoRepository repository, PrecificacaoService precificacaoService, List<EventoListener> listeners) {
+        this.repository = repository;
+        this.precificacaoService = precificacaoService;
+        this.listeners = listeners;
+    }
 
     public ProdutoResponse cadastrarProduto(CadastrarProdutoRequest request);
 

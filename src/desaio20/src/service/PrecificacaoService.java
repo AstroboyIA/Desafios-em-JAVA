@@ -1,13 +1,19 @@
 package desaio20.src.service;
 
+import desaio20.src.pricing.Precificavel;
+
 public class PrecificacaoService {
     
-    public PrecificacaoService(Precifivavel estrategiaInicial) {}
+    private Precificavel estrategiaInicial;
+
+    public PrecificacaoService(Precificavel estrategiaInicial) {
+        this.estrategiaInicial = estrategiaInicial;
+    }
 
     public void alterarEstrategia (Precificavel novaEstrategia) {}
 
-    public double calcularPreco(double precoBase) { return null }
+    public void calcularPreco(double precoBase) {}
 
-    public String descricaoEstrategiaAtual() {return null}
+    public void descricaoEstrategiaAtual() {}
     
 }

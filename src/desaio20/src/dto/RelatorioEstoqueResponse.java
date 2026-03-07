@@ -14,4 +14,15 @@ public class RelatorioEstoqueResponse {
     private final Map<CategoriaEstoque, Integer> quantidadePorCategoria;
     private final List<String> alertasValidade;
     
+    public RelatorioEstoqueResponse(int totalProdutos, int produtosAbaixoDoMinimo, int produtosSemEstoque,
+            double valorTotalEmEstoque, Map<CategoriaEstoque, Integer> quantidadePorCategoria,
+            List<String> alertasValidade) {
+        this.totalProdutos = totalProdutos;
+        this.produtosAbaixoDoMinimo = produtosAbaixoDoMinimo;
+        this.produtosSemEstoque = produtosSemEstoque;
+        this.valorTotalEmEstoque = valorTotalEmEstoque;
+        this.quantidadePorCategoria = quantidadePorCategoria;
+        this.alertasValidade = alertasValidade;
+    }
+    
 }
