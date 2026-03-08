@@ -1,12 +1,17 @@
 package desaio20.src.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
+import desaio20.src.domain.DadosAdicionais;
 import desaio20.src.domain.EventoEstoque;
 import desaio20.src.domain.Produto;
+import desaio20.src.domain.enums.CategoriaEstoque;
 import desaio20.src.domain.enums.TipoEvento;
 import desaio20.src.domain.enums.TipoMovimentacao;
 import desaio20.src.dto.CadastrarProdutoRequest;
@@ -112,22 +117,57 @@ public class EstoqueService {
 
         Produto<?> produto = repository.buscarPorId(idProduto)
                 .orElseThrow(() -> new NoSuchElementException("Produto não encontrado!"));
-        
+
         double precoFinal = precificacaoService.calcularPreco(produto.getPrecoBase());
 
         return new ProdutoResponse(
-            produto.getId(),
-            produto.getNome(),
-            produto.getCategoria(),
-            produto.getPrecoBase(),
-            precoFinal,
-            produto.getQuantidadeEmEstoque(),
-            produto.getDadosAdicionais().resumo(),
-            produto.getQuantidadeEmEstoque() < produto.getCategoria().getQuantidadeMinimaRecomendada()
-        );
+                produto.getId(),
+                produto.getNome(),
+                produto.getCategoria(),
+                produto.getPrecoBase(),
+                precoFinal,
+                produto.getQuantidadeEmEstoque(),
+                produto.getDadosAdicionais().resumo(),
+                produto.getQuantidadeEmEstoque() < produto.getCategoria().getQuantidadeMinimaRecomendada());
     }
 
     public RelatorioEstoqueResponse gerarRelatorio() {
-        return null;
+
+        List<Produto<?>> produtos = repository.buscarTodos();
+        List<String> alertasValidade = new ArrayList<>();
+        int totalEmEstoque = 0;
+        int produtosSemEstoque = 0;
+        int produtosAbaixoDoMinimo = 0;
+        double valorTotalEmEstoque = 0.0;
+
+        Map<CategoriaEstoque, Integer> quantidadePorCategoria = new HashMap<>();
+
+        for (Produto<?> produto : produtos) {
+            produto.getDadosAdicionais().verificarAlertas(produto, alertasValidade, this::publicarEvento);
+
+            totalEmEstoque += produto.getQuantidadeEmEstoque();
+            valorTotalEmEstoque += produto.getPrecoBase() * produto.getQuantidadeEmEstoque();
+
+            quantidadePorCategoria.merge(
+                    produto.getCategoria(),
+                    produto.getQuantidadeEmEstoque(),
+                    Integer::sum
+                );
+
+            if (produto.getQuantidadeEmEstoque() == 0) {
+                produtosSemEstoque++;
+            } else if (produto.getQuantidadeEmEstoque() < produto.getCategoria().getQuantidadeMinimaRecomendada()) {
+                produtosAbaixoDoMinimo++;
+            }
+        }
+
+        return new RelatorioEstoqueResponse(
+                totalEmEstoque,
+                produtosAbaixoDoMinimo,
+                produtosSemEstoque,
+                valorTotalEmEstoque,
+                quantidadePorCategoria,
+                alertasValidade
+            );
     }
 }
