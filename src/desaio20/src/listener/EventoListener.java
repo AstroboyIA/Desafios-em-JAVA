@@ -1,7 +1,9 @@
 package desaio20.src.listener;
 
+import desaio20.src.domain.EventoEstoque;
+
 public interface EventoListener {
     
-    void aoReceberEvento(EventoListener evento);
+    void aoReceberEvento(EventoEstoque evento);
     
 }

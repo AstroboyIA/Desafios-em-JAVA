@@ -30,24 +30,4 @@ public class ProdutoResponse {
         this.abaixoDoMinimo = abaixoDoMinimo;
     }
 
-    public ProdutoResponse cadastrarProduto(CadastrarProdutoRequest request, ProdutoRepository repository) {
-
-        String idGerado = UUID.randomUUID().toString();
-
-        Produto<?> produto = new Produto<>(
-                idGerado,
-                request.getNome(),
-                request.getCategoria(),
-                request.getPrecoBase(),
-                request.getQuantidadeInicial(),
-                request.getDadosAdicionais()
-            );
-
-        repository.salvar(produto);
-    }
-
-    public ProdutoResponse atualizarEstoque(MovimentacaoRequest request) {
-        
-        
-    }
 }

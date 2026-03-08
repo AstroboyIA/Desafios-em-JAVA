@@ -14,6 +14,30 @@ public class RelatorioEstoqueResponse {
     private final Map<CategoriaEstoque, Integer> quantidadePorCategoria;
     private final List<String> alertasValidade;
     
+    public int getTotalProdutos() {
+        return totalProdutos;
+    }
+
+    public int getProdutosAbaixoDoMinimo() {
+        return produtosAbaixoDoMinimo;
+    }
+
+    public int getProdutosSemEstoque() {
+        return produtosSemEstoque;
+    }
+
+    public double getValorTotalEmEstoque() {
+        return valorTotalEmEstoque;
+    }
+
+    public Map<CategoriaEstoque, Integer> getQuantidadePorCategoria() {
+        return quantidadePorCategoria;
+    }
+
+    public List<String> getAlertasValidade() {
+        return alertasValidade;
+    }
+
     public RelatorioEstoqueResponse(int totalProdutos, int produtosAbaixoDoMinimo, int produtosSemEstoque,
             double valorTotalEmEstoque, Map<CategoriaEstoque, Integer> quantidadePorCategoria,
             List<String> alertasValidade) {

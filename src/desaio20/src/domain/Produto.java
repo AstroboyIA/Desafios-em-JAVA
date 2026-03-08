@@ -13,13 +13,13 @@ public class Produto <T extends DadosAdicionais> {
     private int quantidadeEmEstoque;
     private final T dadosAdicionais;
 
-    public Produto(String id, String nome, double precoBase, int quantidadeEmEstoque, T dadosAdicionais) {
+    public Produto(String id, String nome,CategoriaEstoque categoria, double precoBase, int quantidadeEmEstoque, T dadosAdicionais) {
 
-        if (id.isEmpty() || id == null) {
+        if (id == null || id.isEmpty()) {
             throw new IllegalArgumentException("O ID precisa ser informado!");
         }
 
-        if (nome.isEmpty() || nome == null) {
+        if (nome == null || nome.isBlank()) {
             throw new IllegalArgumentException("O nome precisa ser informado!");
         }
 
@@ -35,7 +35,7 @@ public class Produto <T extends DadosAdicionais> {
         this.nome = nome;
         this.precoBase = precoBase;
         this.quantidadeEmEstoque = quantidadeEmEstoque;
-        this.categoria = null; // corrigir depois
+        this.categoria = categoria;
         this.dadosAdicionais = dadosAdicionais;
 
     }
@@ -43,5 +43,32 @@ public class Produto <T extends DadosAdicionais> {
         return quantidadeEmEstoque;
     }
 
+    public String getId() {
+        return id;
+    }
+    public String getNome() {
+        return nome;
+    }
+    public CategoriaEstoque getCategoria() {
+        return categoria;
+    }
+    public double getPrecoBase() {
+        return precoBase;
+    }
+    public T getDadosAdicionais() {
+        return dadosAdicionais;
+    }
+
+    public void adicionarQuantidadeAoEstoque(int quantidade) {
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException("A quantidade deve ser maior que 0");
+        }
+        this.quantidadeEmEstoque += quantidade;
+    }
     
+    public void removerQuantidadeDoEstoque(int quantidade) {
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException("A quantidade deve ser maior que 0");
+        }
+    }
 }

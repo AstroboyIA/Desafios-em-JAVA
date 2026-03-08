@@ -23,4 +23,28 @@ public class EventoEstoque {
         this.momento = momento;
     }
 
+    public TipoEvento getTipo() {
+        return tipo;
+    }
+
+    public String getIdProduto() {
+        return idProduto;
+    }
+
+    public String getNomeProduto() {
+        return nomeProduto;
+    }
+
+    public int getQuantidadeAnterior() {
+        return quantidadeAnterior;
+    }
+
+    public int getQuantidadeAtual() {
+        return quantidadeAtual;
+    }
+
+    public LocalDateTime getMomento() {
+        return momento;
+    }
+
 }
