@@ -22,17 +22,16 @@ public class Main {
         AlertaReposicaoListener alerta = new AlertaReposicaoListener();
         RelatoriosEventosListener relatorioEventos = new RelatoriosEventosListener();
 
-        Precificavel estrategia = new PrecoNormal();
+        Precificavel estrategia = new PrecoNormal(0);
         PrecificacaoService precificacao = new PrecificacaoService(estrategia);
 
         EstoqueService service = new EstoqueService(repository, precificacao, List.of(log, alerta, relatorioEventos));
 
-        service.cadastrarProduto(, repository);
+        service.cadastrarProduto(null);
 
-        service.movimentarEstoque();
+        service.movimentarEstoque(null);
 
         service.gerarRelatorio();
     }
-
     
 }

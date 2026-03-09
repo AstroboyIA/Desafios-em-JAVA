@@ -6,15 +6,23 @@ import java.util.List;
 import desaio20.src.domain.EventoEstoque;
 import desaio20.src.domain.enums.TipoEvento;
 
-public class RelatoriosEventosListener implements EventoListener{
-    
+public class RelatoriosEventosListener implements EventoListener {
+
     private final List<EventoEstoque> eventos = new ArrayList<>();
-    
+
+
+    @Override
+    public void aoReceberEvento(EventoEstoque evento) {
+        eventos.add(evento);
+    }
+
     public List<EventoEstoque> getEventos() {
         return List.copyOf(eventos);
     }
 
     public long contarEventosPorTipo(TipoEvento tipo) {
-        return eventos.stream().filter();
+        return eventos.stream()
+                .filter(e -> e.getTipo() == tipo)
+                .count();
     }
 }
