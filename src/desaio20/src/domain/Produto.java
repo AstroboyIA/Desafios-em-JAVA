@@ -4,8 +4,8 @@ import java.util.UUID;
 
 import desaio20.src.domain.enums.CategoriaEstoque;
 
-public class Produto <T extends DadosAdicionais> {
-    
+public class Produto<T extends DadosAdicionais> {
+
     private final String id;
     private final String nome;
     private final CategoriaEstoque categoria;
@@ -13,7 +13,8 @@ public class Produto <T extends DadosAdicionais> {
     private int quantidadeEmEstoque;
     private final T dadosAdicionais;
 
-    public Produto(String id, String nome,CategoriaEstoque categoria, double precoBase, int quantidadeEmEstoque, T dadosAdicionais) {
+    public Produto(String id, String nome, CategoriaEstoque categoria, double precoBase, int quantidadeEmEstoque,
+            T dadosAdicionais) {
 
         if (id == null || id.isEmpty()) {
             throw new IllegalArgumentException("O ID precisa ser informado!");
@@ -37,24 +38,28 @@ public class Produto <T extends DadosAdicionais> {
         this.quantidadeEmEstoque = quantidadeEmEstoque;
         this.categoria = categoria;
         this.dadosAdicionais = dadosAdicionais;
-
     }
-        public int getQuantidadeEmEstoque() {
+
+    public int getQuantidadeEmEstoque() {
         return quantidadeEmEstoque;
     }
 
     public String getId() {
         return id;
     }
+
     public String getNome() {
         return nome;
     }
+
     public CategoriaEstoque getCategoria() {
         return categoria;
     }
+
     public double getPrecoBase() {
         return precoBase;
     }
+
     public T getDadosAdicionais() {
         return dadosAdicionais;
     }
@@ -65,10 +70,15 @@ public class Produto <T extends DadosAdicionais> {
         }
         this.quantidadeEmEstoque += quantidade;
     }
-    
+
     public void removerQuantidadeDoEstoque(int quantidade) {
         if (quantidade <= 0) {
             throw new IllegalArgumentException("A quantidade deve ser maior que 0");
         }
+        this.quantidadeEmEstoque -= quantidade;
+    }
+
+    public boolean isAbaixoDoMinimo() {
+        return this.quantidadeEmEstoque < this.categoria.getQuantidadeMinimaRecomendada();
     }
 }

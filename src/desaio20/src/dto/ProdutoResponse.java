@@ -18,6 +18,38 @@ public class ProdutoResponse {
     private final String resumoDadosAdicionais;
     private final boolean abaixoDoMinimo;
 
+    public String getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public CategoriaEstoque getCategoria() {
+        return categoria;
+    }
+
+    public double getPrecoBase() {
+        return precoBase;
+    }
+
+    public double getPrecoFinal() {
+        return precoFinal;
+    }
+
+    public int getQuantidadeEmEstoque() {
+        return quantidadeEmEstoque;
+    }
+
+    public String getResumoDadosAdicionais() {
+        return resumoDadosAdicionais;
+    }
+
+    public boolean isAbaixoDoMinimo() {
+        return abaixoDoMinimo;
+    }
+
     public ProdutoResponse(String id, String nome, CategoriaEstoque categoria, double precoBase, double precoFinal,
             int quantidadeEmEstoque, String resumoDadosAdicionais, boolean abaixoDoMinimo) {
         this.id = id;

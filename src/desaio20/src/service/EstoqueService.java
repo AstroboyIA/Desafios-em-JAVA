@@ -40,7 +40,7 @@ public class EstoqueService {
         }
     }
 
-    public ProdutoResponse cadastrarProduto(CadastrarProdutoRequest request, ProdutoRepository repository) {
+    public ProdutoResponse cadastrarProduto(CadastrarProdutoRequest request) {
 
         String idGerado = UUID.randomUUID().toString();
 
@@ -54,8 +54,26 @@ public class EstoqueService {
 
         repository.salvar(produto);
 
-        return null;
+        publicarEvento(
+                new EventoEstoque(
+                        TipoEvento.PRODUTO_CADASTRADO,
+                        produto.getId(),
+                        produto.getNome(),
+                        0,
+                        produto.getQuantidadeEmEstoque(),
+                        LocalDateTime.now()));
 
+        double precoFinal = precificacaoService.calcularPreco(produto.getPrecoBase());
+
+        return new ProdutoResponse(
+                idGerado,
+                produto.getNome(),
+                produto.getCategoria(),
+                produto.getPrecoBase(),
+                precoFinal,
+                produto.getQuantidadeEmEstoque(),
+                produto.getDadosAdicionais().resumo(),
+                produto.isAbaixoDoMinimo());
     }
 
     public ProdutoResponse movimentarEstoque(MovimentacaoRequest request) {
@@ -98,7 +116,7 @@ public class EstoqueService {
                                 quantidadeAnterior,
                                 0,
                                 LocalDateTime.now()));
-            } else if (produto.getQuantidadeEmEstoque() < produto.getCategoria().getQuantidadeMinimaRecomendada()) {
+            } else if (produto.isAbaixoDoMinimo()) {
                 publicarEvento(
                         new EventoEstoque(
                                 TipoEvento.ESTOQUE_MINIMO_ATINGIDO,
@@ -110,7 +128,18 @@ public class EstoqueService {
             }
         }
 
-        return null;
+        double precoFinal = precificacaoService.calcularPreco(produto.getPrecoBase());
+
+        return new ProdutoResponse(
+                produto.getId(),
+                produto.getNome(),
+                produto.getCategoria(),
+                produto.getPrecoBase(),
+                precoFinal,
+                produto.getQuantidadeEmEstoque(),
+                produto.getDadosAdicionais().resumo(),
+                produto.isAbaixoDoMinimo()
+            );
     }
 
     public ProdutoResponse consultarProduto(String idProduto) {
@@ -128,7 +157,7 @@ public class EstoqueService {
                 precoFinal,
                 produto.getQuantidadeEmEstoque(),
                 produto.getDadosAdicionais().resumo(),
-                produto.getQuantidadeEmEstoque() < produto.getCategoria().getQuantidadeMinimaRecomendada());
+                produto.isAbaixoDoMinimo());
     }
 
     public RelatorioEstoqueResponse gerarRelatorio() {
@@ -151,12 +180,11 @@ public class EstoqueService {
             quantidadePorCategoria.merge(
                     produto.getCategoria(),
                     produto.getQuantidadeEmEstoque(),
-                    Integer::sum
-                );
+                    Integer::sum);
 
             if (produto.getQuantidadeEmEstoque() == 0) {
                 produtosSemEstoque++;
-            } else if (produto.getQuantidadeEmEstoque() < produto.getCategoria().getQuantidadeMinimaRecomendada()) {
+            } else if (produto.isAbaixoDoMinimo()) {
                 produtosAbaixoDoMinimo++;
             }
         }
@@ -167,7 +195,6 @@ public class EstoqueService {
                 produtosSemEstoque,
                 valorTotalEmEstoque,
                 quantidadePorCategoria,
-                alertasValidade
-            );
+                alertasValidade);
     }
 }
