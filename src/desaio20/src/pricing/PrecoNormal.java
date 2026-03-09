@@ -14,6 +14,6 @@ public class PrecoNormal implements Precificavel{
     }
 
     public String descricaoEstrategia() {
-        return String.format("Preço base do produto: ", precoNormal);
+        return String.format("Preço base do produto: %s", precoNormal);
     }
 }

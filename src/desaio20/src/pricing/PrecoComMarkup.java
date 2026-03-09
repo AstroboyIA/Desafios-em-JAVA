@@ -15,6 +15,6 @@ public class PrecoComMarkup implements Precificavel{
 
     @Override
     public String descricaoEstrategia() {
-        return String.format("O acréscimo de %.0f%% sobre o preco base", percentualMarkup);
+        return String.format("O acréscimo de %.0f%% sobre o preco base", percentualMarkup*100);
     }
 }
