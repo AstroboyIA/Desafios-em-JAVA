@@ -1,11 +1,6 @@
 package desaio20.src.dto;
 
-import java.util.UUID;
-
-import desaio20.src.domain.Produto;
 import desaio20.src.domain.enums.CategoriaEstoque;
-import desaio20.src.domain.enums.TipoEvento;
-import desaio20.src.repository.ProdutoRepository;
 
 public class ProdutoResponse {
 

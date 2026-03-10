@@ -1,7 +1,6 @@
 package desaio20.src.service;
 
 import desaio20.src.pricing.Precificavel;
-import desaio20.src.pricing.PrecoComDesconto;
 
 public class PrecificacaoService {
 

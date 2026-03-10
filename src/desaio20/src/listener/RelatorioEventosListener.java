@@ -6,7 +6,7 @@ import java.util.List;
 import desaio20.src.domain.EventoEstoque;
 import desaio20.src.domain.enums.TipoEvento;
 
-public class RelatoriosEventosListener implements EventoListener {
+public class RelatorioEventosListener implements EventoListener {
 
     private final List<EventoEstoque> eventos = new ArrayList<>();
 

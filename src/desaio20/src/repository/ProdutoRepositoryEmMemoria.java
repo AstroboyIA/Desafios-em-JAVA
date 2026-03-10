@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import desaio20.src.domain.Produto;
 
-public class ProdutosRepositoryEmMemoria implements ProdutoRepository {
+public class ProdutoRepositoryEmMemoria implements ProdutoRepository {
     
     private final Map<String, Produto<?>> produtos = new HashMap<>();
 
@@ -37,9 +37,9 @@ public class ProdutosRepositoryEmMemoria implements ProdutoRepository {
 
         if (produtos.containsKey(id)) {
             produtos.put(id, produto);
-            System.out.println("Produto " + id + "atualizado com sucesso!");
+            System.out.println("Produto " + id + " atualizado com sucesso!");
         } else {
-            System.out.println("Produto " + id + "não encontrado!");
+            System.out.println("Produto " + id + " não encontrado!");
         }
     }
 }

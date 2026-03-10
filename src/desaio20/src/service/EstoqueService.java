@@ -189,12 +189,13 @@ public class EstoqueService {
             }
         }
 
-        return new RelatorioEstoqueResponse(
-                totalEmEstoque,
-                produtosAbaixoDoMinimo,
-                produtosSemEstoque,
-                valorTotalEmEstoque,
-                quantidadePorCategoria,
-                alertasValidade);
+        return new RelatorioEstoqueResponse.Builder()
+                .totalProdutos(totalEmEstoque)
+                .produtosAbaixoDoMinimo(produtosAbaixoDoMinimo)
+                .produtosSemEstoque(produtosSemEstoque)
+                .valorTotalEmEstoque(valorTotalEmEstoque)
+                .quantidadePorCategoria(quantidadePorCategoria)
+                .alertasValidade(alertasValidade)
+                .build();
     }
 }

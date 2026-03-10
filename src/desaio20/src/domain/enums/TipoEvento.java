@@ -9,7 +9,7 @@ public enum TipoEvento {
     ESTOQUE_ZERADO("Sem produtos no estoque."),
     VALIDADE_PROXIMA("A válidade do produto está proxima do vencimento.");
 
-    public String descricao;
+    private final String descricao;
 
     private TipoEvento(String descricao) {
         this.descricao = descricao;

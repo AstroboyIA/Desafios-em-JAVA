@@ -32,6 +32,10 @@ public class Produto<T extends DadosAdicionais> {
             throw new IllegalArgumentException("A quantidade de produtos em estoque não pode ser negativa.");
         }
 
+        if (dadosAdicionais == null) {
+            throw new IllegalArgumentException("Os dados adicionais precisam ser informados!");
+        }
+
         this.id = id;
         this.nome = nome;
         this.precoBase = precoBase;
@@ -72,12 +76,11 @@ public class Produto<T extends DadosAdicionais> {
     }
 
     public void removerQuantidadeDoEstoque(int quantidade) {
-        
-        Produto<DadosAdicionais> produto = new Produto<DadosAdicionais>(id, nome, categoria, quantidade, quantidade, dadosAdicionais);
-        
+
         if (quantidade <= 0) {
             throw new IllegalArgumentException("A quantidade deve ser maior que 0");
-        } else if (quantidade > produto.getQuantidadeEmEstoque()) {
+        }
+        if (quantidade > this.getQuantidadeEmEstoque()) {
             throw new IllegalArgumentException("Quantidade em estoque insuficiente.");
         }
         this.quantidadeEmEstoque -= quantidade;

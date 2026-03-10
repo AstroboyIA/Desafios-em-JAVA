@@ -2,7 +2,6 @@ package desaio20.src.pricing;
 
 import desaio20.src.domain.Produto;
 import desaio20.src.repository.ProdutoRepository;
-import desaio20.src.repository.ProdutosRepositoryEmMemoria;
 
 public class PrecoDinamico implements Precificavel {
 

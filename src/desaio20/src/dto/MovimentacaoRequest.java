@@ -1,6 +1,5 @@
 package desaio20.src.dto;
 
-import desaio20.src.domain.enums.TipoEvento;
 import desaio20.src.domain.enums.TipoMovimentacao;
 
 public class MovimentacaoRequest {

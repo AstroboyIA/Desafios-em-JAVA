@@ -6,14 +6,14 @@ import java.util.Map;
 import desaio20.src.domain.enums.CategoriaEstoque;
 
 public class RelatorioEstoqueResponse {
-    
+
     private final int totalProdutos;
     private final int produtosAbaixoDoMinimo;
     private final int produtosSemEstoque;
     private final double valorTotalEmEstoque;
     private final Map<CategoriaEstoque, Integer> quantidadePorCategoria;
     private final List<String> alertasValidade;
-    
+
     public int getTotalProdutos() {
         return totalProdutos;
     }
@@ -41,12 +41,38 @@ public class RelatorioEstoqueResponse {
     public RelatorioEstoqueResponse(int totalProdutos, int produtosAbaixoDoMinimo, int produtosSemEstoque,
             double valorTotalEmEstoque, Map<CategoriaEstoque, Integer> quantidadePorCategoria,
             List<String> alertasValidade) {
-        this.totalProdutos = totalProdutos;
+        produtos.size();
         this.produtosAbaixoDoMinimo = produtosAbaixoDoMinimo;
         this.produtosSemEstoque = produtosSemEstoque;
         this.valorTotalEmEstoque = valorTotalEmEstoque;
         this.quantidadePorCategoria = quantidadePorCategoria;
         this.alertasValidade = alertasValidade;
     }
-    
+
+    public static class Builder {
+
+        private int totalProdutos;
+        private int produtosAbaixoDoMinimo;
+        private int produtosSemEstoque;
+        private double valorTotalEmEstoque;
+        private Map<CategoriaEstoque, Integer> quantidadePorCategoria;
+        private List<String> alertasValidade;
+
+        public Builder totalProdutos(int val) { this.totalProdutos = val; return this;}
+
+        public Builder produtosAbaixoDoMinimo(int val) { this.produtosAbaixoDoMinimo = val; return this;}
+
+        public Builder produtosSemEstoque(int val) { this.produtosSemEstoque = val; return this;}
+
+        public Builder valorTotalEmEstoque(double val) { this.valorTotalEmEstoque = val; return this;}
+
+        public Builder quantidadePorCategoria(Map<CategoriaEstoque, Integer> val) { this.quantidadePorCategoria = val; return this;}
+
+        public Builder alertasValidade(List<String> val) { this.alertasValidade = val; return this;}
+
+        public RelatorioEstoqueResponse build() {
+            return new RelatorioEstoqueResponse(this);
+        }
+    }
+
 }
