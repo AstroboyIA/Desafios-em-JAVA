@@ -42,6 +42,10 @@ public class EstoqueService {
 
     public ProdutoResponse cadastrarProduto(CadastrarProdutoRequest request) {
 
+        if (request == null) {
+            throw new IllegalArgumentException("Por favor, preencha os dados antes de finalizar.");
+        }
+
         String idGerado = UUID.randomUUID().toString();
 
         Produto<?> produto = new Produto<>(
@@ -77,6 +81,10 @@ public class EstoqueService {
     }
 
     public ProdutoResponse movimentarEstoque(MovimentacaoRequest request) {
+
+        if (request == null) {
+            throw new IllegalArgumentException("Por favor, preencha os dados antes de finalizar.");
+        }
 
         Produto<?> produto = repository.buscarPorId(request.getIdProduto())
                 .orElseThrow(() -> new NoSuchElementException("Produto não encontrado!"));
@@ -190,7 +198,7 @@ public class EstoqueService {
         }
 
         return new RelatorioEstoqueResponse.Builder()
-                .totalProdutos(totalEmEstoque)
+                .totalProdutos(produtos.size())
                 .produtosAbaixoDoMinimo(produtosAbaixoDoMinimo)
                 .produtosSemEstoque(produtosSemEstoque)
                 .valorTotalEmEstoque(valorTotalEmEstoque)

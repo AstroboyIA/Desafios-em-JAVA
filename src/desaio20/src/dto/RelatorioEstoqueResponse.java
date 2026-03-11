@@ -38,15 +38,15 @@ public class RelatorioEstoqueResponse {
         return alertasValidade;
     }
 
-    public RelatorioEstoqueResponse(int totalProdutos, int produtosAbaixoDoMinimo, int produtosSemEstoque,
-            double valorTotalEmEstoque, Map<CategoriaEstoque, Integer> quantidadePorCategoria,
-            List<String> alertasValidade) {
-        produtos.size();
-        this.produtosAbaixoDoMinimo = produtosAbaixoDoMinimo;
-        this.produtosSemEstoque = produtosSemEstoque;
-        this.valorTotalEmEstoque = valorTotalEmEstoque;
-        this.quantidadePorCategoria = quantidadePorCategoria;
-        this.alertasValidade = alertasValidade;
+    private RelatorioEstoqueResponse(Builder builder) {
+    
+        this.totalProdutos = builder.totalProdutos;
+        this.produtosAbaixoDoMinimo = builder.produtosAbaixoDoMinimo;
+        this.produtosSemEstoque = builder.produtosSemEstoque;
+        this.valorTotalEmEstoque = builder.valorTotalEmEstoque;
+        this.quantidadePorCategoria = builder.quantidadePorCategoria;
+        this.alertasValidade = builder.alertasValidade;
+        
     }
 
     public static class Builder {

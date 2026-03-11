@@ -1,7 +1,5 @@
 package desaio20.src.domain;
 
-import java.util.UUID;
-
 import desaio20.src.domain.enums.CategoriaEstoque;
 
 public class Produto<T extends DadosAdicionais> {
@@ -36,6 +34,9 @@ public class Produto<T extends DadosAdicionais> {
             throw new IllegalArgumentException("Os dados adicionais precisam ser informados!");
         }
 
+        if (categoria == null) {
+            throw new IllegalArgumentException("Por favor, informe a categoria!");
+        }
         this.id = id;
         this.nome = nome;
         this.precoBase = precoBase;
@@ -81,7 +82,7 @@ public class Produto<T extends DadosAdicionais> {
             throw new IllegalArgumentException("A quantidade deve ser maior que 0");
         }
         if (quantidade > this.getQuantidadeEmEstoque()) {
-            throw new IllegalArgumentException("Quantidade em estoque insuficiente.");
+            throw new IllegalStateException("Quantidade em estoque insuficiente.");
         }
         this.quantidadeEmEstoque -= quantidade;
     }

@@ -21,16 +21,17 @@ public class DadosPerecivel implements DadosAdicionais {
     public String resumo() {
         return
         "Data de válidade: " + dataValidade +
-        "Lote de restramento: " + loteRastreamento;
+        " | Lote de restreamento: " + loteRastreamento;
     }
 
     @Override
     public void verificarAlertas(Produto<?> produto, List<String> alertas, Consumer<EventoEstoque> publicador) {
 
         // verifica nos proximos 7 dias
-        LocalDate limiteAlerta = LocalDate.now().plusDays(7);
+        LocalDate hoje = LocalDate.now();
+        LocalDate limiteAlerta = hoje.plusDays(7);
 
-        if (!dataValidade.isAfter(limiteAlerta)) {
+        if (dataValidade.isAfter(hoje) && !dataValidade.isAfter(limiteAlerta)) {
             alertas.add(String.format(
                 "%s vence em %s - Lote %s",
                 produto.getNome(),
