@@ -13,6 +13,7 @@ import desaio20.src.domain.enums.TipoMovimentacao;
 import desaio20.src.dto.CadastrarProdutoRequest;
 import desaio20.src.dto.MovimentacaoRequest;
 import desaio20.src.dto.ProdutoResponse;
+import desaio20.src.dto.RelatorioEstoqueResponse;
 import desaio20.src.listener.AlertaReposicaoListener;
 import desaio20.src.listener.LogListener;
 import desaio20.src.listener.RelatorioEventosListener;
@@ -212,7 +213,8 @@ public class AplicacaoConsole {
         }
 
         for (ProdutoResponse p : produtos) {
-            System.out.println("ID: "+p.getId()+"| "+p.getNome()+" | Estoque: "+p.getQuantidadeEmEstoque()+"unidades" );
+            System.out.println(
+                    "ID: " + p.getId() + "| " + p.getNome() + " | Estoque: " + p.getQuantidadeEmEstoque() + "unidades");
         }
 
         TipoMovimentacao tipoMovimentacao = null;
@@ -251,6 +253,33 @@ public class AplicacaoConsole {
     }
 
     private void consultarProduto() {
+
+        System.out.println("=== PRODUTOS DISPONÍVEIS ===");
+        List<ProdutoResponse> produtos = estoqueService.listarProdutos();
+
+        if (produtos.isEmpty()) {
+            System.out.println("Nenhum produto cadastrado.");
+            return;
+        }
+
+        for (ProdutoResponse p : produtos) {
+            System.out.println(
+                    "ID: " + p.getId() + "| " + p.getNome() + " | Estoque: " + p.getQuantidadeEmEstoque() + "unidades");
+        }
+
+        System.out.println("Qual produto você deseja consultar?:");
+        String consultarProduto = sc.nextLine();
+
+        ProdutoResponse response = estoqueService.consultarProduto(consultarProduto);
+
+        System.out.println("\n--- DETALHES DO PRODUTO ---");
+        System.out.println("ID: " + response.getId());
+        System.out.println("Produto: " + response.getNome());
+        System.out.println("Preço base: " + response.getPrecoBase());
+        System.out.println("Preço final: " + response.getPrecoFinal());
+        System.out.println("Em estoque: " + response.getQuantidadeEmEstoque());
+        System.out.println("Detalhes adicionais: " + response.getResumoDadosAdicionais());
+        System.out.println("Abaixo do mínimo: " + (response.isAbaixoDoMinimo() ? "SIM" : "NÃO"));
 
     }
 
