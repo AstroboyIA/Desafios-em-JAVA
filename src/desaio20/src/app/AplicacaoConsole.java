@@ -284,6 +284,25 @@ public class AplicacaoConsole {
     }
 
     private void gerarRelatorio() {
+        RelatorioEstoqueResponse response = estoqueService.gerarRelatorio();
 
+        System.out.println("=== Relatório Completo ====");
+        System.out.println("Total de produtos: " + response.getTotalProdutos());
+        System.out.println("Produtos abaixo da quantidade minima: " + response.getProdutosAbaixoDoMinimo());
+        System.out.println("Produtos com estoque zerado: " + response.getProdutosSemEstoque());
+        System.out.println("Valor total atual do estoque: R$ %.2f%n" + response.getValorTotalEmEstoque());
+
+        System.out.println("\n--- Quantidade por Categoria ---");
+        response.getQuantidadePorCategoria().forEach((categoria, quantidade) -> 
+            System.out.println(" " + categoria + ": " + quantidade + "unidades")
+        );
+        System.out.println("\n--- Alertas de Validade ---");
+        if (response.getAlertasValidade().isEmpty()) {
+            System.out.println("Nenhum produto com validade próxima.");
+        } else {
+            response.getAlertasValidade().forEach(alerta ->
+                System.out.println(" ⚠" + alerta)
+            );
+        }
     }
 }
