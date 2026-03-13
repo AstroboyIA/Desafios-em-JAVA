@@ -9,6 +9,7 @@ import desaio20.src.domain.DadosDigitais;
 import desaio20.src.domain.DadosFisicos;
 import desaio20.src.domain.DadosPerecivel;
 import desaio20.src.domain.enums.CategoriaEstoque;
+import desaio20.src.domain.enums.TipoMovimentacao;
 import desaio20.src.dto.CadastrarProdutoRequest;
 import desaio20.src.dto.MovimentacaoRequest;
 import desaio20.src.dto.ProdutoResponse;
@@ -189,12 +190,11 @@ public class AplicacaoConsole {
         }
 
         CadastrarProdutoRequest request = new CadastrarProdutoRequest(
-            nomeProduto,
-            categoria,
-            precoProduto,
-            quantidadeProdutos,
-            dadosAdicionais
-        );
+                nomeProduto,
+                categoria,
+                precoProduto,
+                quantidadeProdutos,
+                dadosAdicionais);
 
         ProdutoResponse response = estoqueService.cadastrarProduto(request);
 
@@ -202,6 +202,51 @@ public class AplicacaoConsole {
     }
 
     private void movimentarEstoque() {
+
+        System.out.println("=== PRODUTOS DISPONÍVEIS ===");
+        List<ProdutoResponse> produtos = estoqueService.listarProdutos();
+
+        if (produtos.isEmpty()) {
+            System.out.println("Nenhum produto cadastrado.");
+            return;
+        }
+
+        for (ProdutoResponse p : produtos) {
+            System.out.println("ID: "+p.getId()+"| "+p.getNome()+" | Estoque: "+p.getQuantidadeEmEstoque()+"unidades" );
+        }
+
+        TipoMovimentacao tipoMovimentacao = null;
+
+        System.out.println("Qual tipo de movimentação você deseja fazer?:");
+        System.out.println("1 - Adicionar quantidade");
+        System.out.println("2 - Retirar quantidade");
+        int opcaoMovimentacao = sc.nextInt();
+        sc.nextLine();
+
+        switch (opcaoMovimentacao) {
+
+            case 1 -> tipoMovimentacao = TipoMovimentacao.ENTRADA;
+
+            case 2 -> tipoMovimentacao = TipoMovimentacao.SAIDA;
+
+            default -> {
+                System.out.println("Opção inválida!");
+                return;
+            }
+        }
+
+        System.out.println("Informe o ID do produto:");
+        String idProduto = sc.nextLine();
+
+        System.out.println("Informe a quantidade: ");
+        int quantidade = sc.nextInt();
+        sc.nextLine();
+
+        MovimentacaoRequest request = new MovimentacaoRequest(idProduto, quantidade, tipoMovimentacao);
+
+        ProdutoResponse response = estoqueService.movimentarEstoque(request);
+
+        System.out.println("Produto atualizado! Estoque atual: " + response.getQuantidadeEmEstoque());
 
     }
 

@@ -146,8 +146,7 @@ public class EstoqueService {
                 precoFinal,
                 produto.getQuantidadeEmEstoque(),
                 produto.getDadosAdicionais().resumo(),
-                produto.isAbaixoDoMinimo()
-            );
+                produto.isAbaixoDoMinimo());
     }
 
     public ProdutoResponse consultarProduto(String idProduto) {
@@ -205,5 +204,21 @@ public class EstoqueService {
                 .quantidadePorCategoria(quantidadePorCategoria)
                 .alertasValidade(alertasValidade)
                 .build();
+    }
+
+    public List<ProdutoResponse> listarProdutos() {
+        return repository.buscarTodos()
+                .stream()
+                .map(produto -> new ProdutoResponse(
+                        produto.getId(),
+                        produto.getNome(),
+                        produto.getCategoria(),
+                        produto.getPrecoBase(),
+                        precificacaoService.calcularPreco(produto.getPrecoBase()),
+                        produto.getQuantidadeEmEstoque(),
+                        produto.getDadosAdicionais().resumo(),
+                        produto.isAbaixoDoMinimo()
+                    ))
+                .toList();
     }
 }
