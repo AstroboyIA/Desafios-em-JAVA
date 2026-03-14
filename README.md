@@ -1,5 +1,9 @@
-Testes e desafios para aprimorar meus conhecimentos em JAVA.
-Todos os desafios e testes nesse repositório serão feitos sem o auxilio de IA, o objetivo é aprender a linguagem de forma prática.
+📈 20+ desafios progressivos em Java puro — do básico ao nível backend profissional.
 
-Tentarei deixar enunciados para caso alguem decida fazer os mesmos exercicios, ter uma base do que está sendo proposto.
-Procure por README.MD dentro das pastas de desafios.
+O repositório documenta minha evolução desde fundamentos da linguagem até a construção de sistemas com arquitetura próxima ao que se usa em produção com Spring Boot: separação em camadas, DTOs, repositórios com interface, injeção de dependência via construtor e comunicação por eventos.
+
+Destaques:
+• Desafio 19 — Motor de autorização financeira com antifraude, score dinâmico e bloqueio automático
+• Desafio 20 — Sistema de e-commerce com arquitetura Spring-style, padrões Strategy e Observer
+
+Todos os desafios foram implementados sem IA e sem frameworks externos. Enunciados disponíveis em cada pasta.
