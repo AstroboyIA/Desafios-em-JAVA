@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ServicoAdicional {
     
-    double getvalor();
+    double getValor();
     String descricao();
     void aplicarAlertas(Reserva<?> reserva, List<String> alertas);
 

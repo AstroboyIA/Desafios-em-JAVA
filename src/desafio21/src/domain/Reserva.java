@@ -78,8 +78,12 @@ public class Reserva<T extends ServicoAdicional> {
     }
 
     public void adicionarServico(T servico) {
+        if (servico == null) {
+            throw new IllegalArgumentException("Caso não haja serviço adicional, informe.");
+        }
     }
 
-    public /* List<T> */void getServicos() {
+    public List<T> getServicos() {
+        return null;
     }
 }

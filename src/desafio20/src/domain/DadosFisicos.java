@@ -18,7 +18,7 @@ public class DadosFisicos implements DadosAdicionais {
     @Override
     public String resumo() {
         return 
-        "Peso : " + pesoKg +
+        "Peso: " + pesoKg +
         "Dimensões: " + dimensoesCm +
         "Precisa de refrigeração?: " + requerRefrigeracao;
     }
