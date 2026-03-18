@@ -2,7 +2,7 @@ package desafio20.src.domain;
 
 import desafio20.src.domain.enums.CategoriaEstoque;
 
-public class Produto<T extends DadosAdicionais> {
+public class Produto <T extends DadosAdicionais> {
 
     private final String id;
     private final String nome;

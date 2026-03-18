@@ -4,25 +4,13 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
-import desafio20.src.domain.DadosAdicionais;
-import desafio20.src.domain.DadosDigitais;
-import desafio20.src.domain.DadosFisicos;
-import desafio20.src.domain.DadosPerecivel;
-import desafio20.src.domain.enums.CategoriaEstoque;
-import desafio20.src.domain.enums.TipoMovimentacao;
-import desafio20.src.dto.CadastrarProdutoRequest;
-import desafio20.src.dto.MovimentacaoRequest;
-import desafio20.src.dto.ProdutoResponse;
-import desafio20.src.dto.RelatorioEstoqueResponse;
-import desafio20.src.listener.AlertaReposicaoListener;
-import desafio20.src.listener.LogListener;
-import desafio20.src.listener.RelatorioEventosListener;
-import desafio20.src.pricing.Precificavel;
-import desafio20.src.pricing.PrecoNormal;
-import desafio20.src.repository.ProdutoRepository;
-import desafio20.src.repository.ProdutoRepositoryEmMemoria;
-import desafio20.src.service.EstoqueService;
-import desafio20.src.service.PrecificacaoService;
+import desafio20.src.domain.*;
+import desafio20.src.domain.enums.*;
+import desafio20.src.dto.*;
+import desafio20.src.listener.*;
+import desafio20.src.pricing.*;
+import desafio20.src.repository.*;
+import desafio20.src.service.*;
 
 public class AplicacaoConsole {
 
